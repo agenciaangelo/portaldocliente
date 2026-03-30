@@ -269,11 +269,15 @@ tr:hover td{background:rgba(255,255,255,.015)}
       <div class="section" id="c-activities"><div class="dem-form"><h3 style="font-size:15px;font-weight:800;margin-bottom:4px">📝 Adicionar Observação</h3><div class="fr"><div class="fg2"><label>Atividade</label><select id="actSel" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none"></select></div><div class="fg2"><label>Tipo</label><select id="actType" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none"><option>Aprovação</option><option>Ajuste</option><option>Comentário</option><option>Urgente</option></select></div></div><div class="fg2"><label>Mensagem</label><textarea id="actMsg" placeholder="Descreva seu feedback..."></textarea></div><button onclick="enviarObsAtividade()" class="btn-save">Enviar Feedback</button></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Todas as Atividades</div></div><div id="c-act-list"></div></div></div>
       <div class="section" id="c-demands"><div class="dem-form"><h3 style="font-size:15px;font-weight:800;margin-bottom:4px" id="demFormTitle">➕ Nova Demanda</h3><input type="hidden" id="demEditId" value=""><div class="fr"><div class="fg2"><label>Título</label><input id="dTit" placeholder="Arte para post de aniversário"/></div><div class="fg2"><label>Tipo</label><select id="dTip"><option value="">Selecione...</option><option>Arte / Design</option><option>Vídeo / Reels</option><option>Gravação</option><option>Estratégia</option><option>Relatório</option><option>Outro</option></select></div></div><div class="fr"><div class="fg2"><label>Prazo</label><input id="dPra" type="date"/></div><div class="fg2"><label>Prioridade</label><select id="dPri"><option>Normal</option><option>Alta</option><option>Urgente</option></select></div></div><div class="fg2"><label>Descrição</label><textarea id="dDes" placeholder="Detalhe cores, referências, medidas..."></textarea></div><div style="display:flex;gap:10px;margin-top:8px"><button onclick="salvarDemanda()" class="btn-save" id="demBtnSave">Enviar Demanda</button><button onclick="cancelarEditDemanda()" class="btn-cancel" id="demBtnCancel" style="display:none">Cancelar</button></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Minhas Demandas</div></div><div id="c-dem-list"></div></div></div>
       <div class="section" id="c-indicadores"><div class="readonly-notice">🔒 Indicadores atualizados pela Agência Ângelo.</div><div class="kpi-grid" id="c-ind-kpis"></div><div class="g2"><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Por Plataforma</div></div><div id="c-ind-chart"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Top Conteúdos</div></div><div id="c-ind-top"></div></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>🎯 Metas de Indicadores</div></div><div id="c-ind-metas"></div></div></div>
-      <div class="section" id="c-relatorios"><div class="readonly-notice">🔒 Relatórios publicados pela Agência Ângelo.</div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Relatórios</div></div><div id="c-rel-list"></div></div></div>
-      <div class="section" id="c-mercado"><div class="readonly-notice">🔒 Análise de mercado elaborada pela Agência Ângelo.</div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Tendências</div></div><div id="c-merc-list"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Concorrentes</div></div><div id="c-conc-list"></div></div></div>
-      <div class="section" id="c-estrategias"><div class="readonly-notice">🔒 Estratégias definidas pela Agência Ângelo.</div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Estratégias Ativas</div></div><div id="c-est-list"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>🎯 Metas de Estratégia</div></div><div id="c-est-metas"></div></div></div>
+      <div class="section" id="c-relatorios"><div class="readonly-notice">🔒 Relatórios publicados pela Agência Ângelo.</div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Relatórios</div></div><div id="c-rel-list"></div></div>
+        <div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>📎 Arquivos Vinculados</div></div><div id="arq-links-relatorios"></div></div></div>
+      <div class="section" id="c-mercado"><div class="readonly-notice">🔒 Análise de mercado elaborada pela Agência Ângelo.</div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Tendências</div></div><div id="c-merc-list"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Concorrentes</div></div><div id="c-conc-list"></div></div>
+        <div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>📎 Arquivos Vinculados</div></div><div id="arq-links-mercado"></div></div></div>
+      <div class="section" id="c-estrategias"><div class="readonly-notice">🔒 Estratégias definidas pela Agência Ângelo.</div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Estratégias Ativas</div></div><div id="c-est-list"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>🎯 Metas de Estratégia</div></div><div id="c-est-metas"></div></div>
+        <div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>📎 Arquivos Vinculados</div></div><div id="arq-links-estrategias"></div></div></div>
       <div class="section" id="c-calendario"><div class="readonly-notice">🔒 Calendário editorial gerenciado pela Agência Ângelo.</div><div class="card"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><div class="ct-left" style="font-size:14px;font-weight:700;display:flex;gap:8px"><div class="ctd" style="margin-top:5px"></div><span id="calMonthLabel"></span></div><div style="display:flex;gap:6px"><button onclick="changeCalMonth(-1)" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:5px 12px;border-radius:7px;cursor:pointer">‹</button><button onclick="changeCalMonth(1)" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:5px 12px;border-radius:7px;cursor:pointer">›</button></div></div><div class="cal-header"><div class="cal-hd">Dom</div><div class="cal-hd">Seg</div><div class="cal-hd">Ter</div><div class="cal-hd">Qua</div><div class="cal-hd">Qui</div><div class="cal-hd">Sex</div><div class="cal-hd">Sáb</div></div><div class="cal-grid" id="calGrid"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Eventos do Mês</div></div><div id="calEventList"></div></div></div>
-      <div class="section" id="c-campanhas"><div class="readonly-notice">🔒 Campanhas gerenciadas pela Agência Ângelo.</div><div id="c-camp-list"></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>🎯 Metas de Campanhas</div></div><div id="c-camp-metas"></div></div></div>
+      <div class="section" id="c-campanhas"><div class="readonly-notice">🔒 Campanhas gerenciadas pela Agência Ângelo.</div><div id="c-camp-list"></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>🎯 Metas de Campanhas</div></div><div id="c-camp-metas"></div></div>
+        <div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>📎 Arquivos Vinculados</div></div><div id="arq-links-campanhas"></div></div></div>
       <div class="section" id="c-drive"><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Enviar Arquivo</div></div>          <div class="upload-zone" id="dropZone" onclick="document.getElementById('fileInput').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event)">
             <p>Arraste ou <strong>clique para selecionar</strong></p><p style="font-size:11px;margin-top:4px;color:var(--muted)">PDF, JPG, PNG, MP4, ZIP até 50MB</p>
           </div><input type="file" id="fileInput" multiple onchange="handleFileSelect(this.files)"/><ul class="up-file-list" id="upList"></ul></div><div class="card"><div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:11px;background:var(--card2);border-radius:9px;border:1px solid var(--border);font-size:12px"><span style="color:var(--muted)">Pasta Drive:</span><span style="color:var(--blue);cursor:pointer;font-weight:600" id="driveFolderLabel" onclick="openClientDriveFolder()">Abrir minha pasta →</span></div><div class="tabs"><div class="tab active" onclick="filterFiles('all',this)">Todos</div><div class="tab" onclick="filterFiles('arte',this)">Artes</div><div class="tab" onclick="filterFiles('video',this)">Vídeos</div><div class="tab" onclick="filterFiles('doc',this)">Docs</div></div><div class="fg-grid" id="filesGrid">
@@ -344,11 +348,15 @@ tr:hover td{background:rgba(255,255,255,.015)}
       <div class="asec" id="a-demands"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-size:14px;color:var(--muted)">Demandas</div><button onclick="openADemandModal()" class="btn-add">+ Nova Demanda</button></div><div class="filter-bar"><label>Cliente:</label><select class="filter-sel" id="fDemCliente" onchange="renderADemands()"><option value="">Todos</option></select></div><div class="card"><div id="a-dem-list"></div></div></div>
       <div class="asec" id="a-activities"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-size:14px;color:var(--muted)">Atividades</div><button onclick="openActModal()" class="btn-add">+ Nova Atividade</button></div><div class="filter-bar"><label>Cliente:</label><select class="filter-sel" id="fActCliente" onchange="renderAActivities()"><option value="">Todos</option></select></div><div class="card"><div id="a-act-list"></div></div></div>
       <div class="asec" id="a-indicadores"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-size:14px;color:var(--muted)">Indicadores</div><button onclick="openIndModal()" class="btn-add">+ Novo</button></div><div class="filter-bar"><label>Cliente:</label><select class="filter-sel" id="fIndCliente" onchange="renderAIndicadores()"><option value="">Todos</option></select></div><div class="kpi-grid" id="a-ind-kpis"></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Por Plataforma</div><button onclick="openPlatModal()" class="btn-add" style="font-size:11px;padding:5px 12px">+ Plataforma</button></div><div id="a-ind-chart"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Top Conteúdos</div><button onclick="openTopModal()" class="btn-add" style="font-size:11px;padding:5px 12px">+ Conteúdo</button></div><div id="a-ind-top"></div></div></div>
-      <div class="asec" id="a-relatorios"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-size:14px;color:var(--muted)">Relatórios</div><button onclick="openRelModal()" class="btn-add">+ Novo</button></div><div class="filter-bar"><label>Cliente:</label><select class="filter-sel" id="fRelCliente" onchange="renderARelatorios()"><option value="">Todos</option></select></div><div class="card"><div class="tbl-wrap"><table><thead><tr><th>Título</th><th>Cliente</th><th>Data</th><th>Ações</th></tr></thead><tbody id="a-rel-table"></tbody></table></div></div></div>
-      <div class="asec" id="a-mercado"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-size:14px;color:var(--muted)">Mercado</div><button onclick="openMercModal()" class="btn-add">+ Adicionar</button></div><div class="filter-bar"><label>Cliente:</label><select class="filter-sel" id="fMercCliente" onchange="renderAMercado()"><option value="">Todos</option></select></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Tendências</div></div><div id="a-merc-list"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Concorrentes</div></div><div id="a-conc-list"></div></div></div>
-      <div class="asec" id="a-estrategias"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-size:14px;color:var(--muted)">Estratégias</div><button onclick="openEstModal()" class="btn-add">+ Nova</button></div><div class="filter-bar"><label>Cliente:</label><select class="filter-sel" id="fEstCliente" onchange="renderAEstrategias()"><option value="">Todos</option></select></div><div class="card"><div id="a-est-list"></div></div></div>
+      <div class="asec" id="a-relatorios"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-size:14px;color:var(--muted)">Relatórios</div><button onclick="openRelModal()" class="btn-add">+ Novo</button></div><div class="filter-bar"><label>Cliente:</label><select class="filter-sel" id="fRelCliente" onchange="renderARelatorios();renderAArquivos('relatorios')"><option value="">Todos</option></select></div><div class="card"><div class="tbl-wrap"><table><thead><tr><th>Título</th><th>Cliente</th><th>Data</th><th>Ações</th></tr></thead><tbody id="a-rel-table"></tbody></table></div></div>
+        <div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>📎 Arquivos Vinculados</div></div><div id="a-arq-links-relatorios"></div></div></div>
+      <div class="asec" id="a-mercado"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-size:14px;color:var(--muted)">Mercado</div><button onclick="openMercModal()" class="btn-add">+ Adicionar</button></div><div class="filter-bar"><label>Cliente:</label><select class="filter-sel" id="fMercCliente" onchange="renderAMercado();renderAArquivos('mercado')"><option value="">Todos</option></select></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Tendências</div></div><div id="a-merc-list"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Concorrentes</div></div><div id="a-conc-list"></div></div>
+        <div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>📎 Arquivos Vinculados</div></div><div id="a-arq-links-mercado"></div></div></div>
+      <div class="asec" id="a-estrategias"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-size:14px;color:var(--muted)">Estratégias</div><button onclick="openEstModal()" class="btn-add">+ Nova</button></div><div class="filter-bar"><label>Cliente:</label><select class="filter-sel" id="fEstCliente" onchange="renderAEstrategias();renderAArquivos('estrategias')"><option value="">Todos</option></select></div><div class="card"><div id="a-est-list"></div></div>
+        <div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>📎 Arquivos Vinculados</div></div><div id="a-arq-links-estrategias"></div></div></div>
       <div class="asec" id="a-calendario"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-size:14px;color:var(--muted)">Calendário Editorial</div><button onclick="openCalModal()" class="btn-add">+ Novo Evento</button></div><div class="filter-bar"><label>Cliente:</label><select class="filter-sel" id="fCalCliente" onchange="renderACalendar()"><option value="">Todos</option></select></div><div class="card"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><div class="ct-left" style="font-size:14px;font-weight:700;display:flex;gap:8px"><div class="ctd" style="margin-top:5px"></div><span id="aCalMonthLabel"></span></div><div style="display:flex;gap:6px"><button onclick="changeACalMonth(-1)" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:5px 12px;border-radius:7px;cursor:pointer">‹</button><button onclick="changeACalMonth(1)" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:5px 12px;border-radius:7px;cursor:pointer">›</button></div></div><div class="cal-header"><div class="cal-hd">Dom</div><div class="cal-hd">Seg</div><div class="cal-hd">Ter</div><div class="cal-hd">Qua</div><div class="cal-hd">Qui</div><div class="cal-hd">Sex</div><div class="cal-hd">Sáb</div></div><div class="cal-grid" id="aCalGrid"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Eventos do Mês</div></div><div id="aCalEventList"></div></div></div>
-      <div class="asec" id="a-campanhas"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-size:14px;color:var(--muted)">Campanhas</div><button onclick="openCampModal()" class="btn-add">+ Nova</button></div><div class="filter-bar"><label>Cliente:</label><select class="filter-sel" id="fCampCliente" onchange="renderACampanhas()"><option value="">Todos</option></select></div><div id="a-camp-list"></div></div>
+      <div class="asec" id="a-campanhas"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-size:14px;color:var(--muted)">Campanhas</div><button onclick="openCampModal()" class="btn-add">+ Nova</button></div><div class="filter-bar"><label>Cliente:</label><select class="filter-sel" id="fCampCliente" onchange="renderACampanhas();renderAArquivos('campanhas')"><option value="">Todos</option></select></div><div id="a-camp-list"></div>
+        <div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>📎 Arquivos Vinculados</div></div><div id="a-arq-links-campanhas"></div></div></div>
       <div class="asec" id="a-metas"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-size:14px;color:var(--muted)">Metas</div><button onclick="openMetaModal()" class="btn-add">+ Nova</button></div><div class="filter-bar"><label>Cliente:</label><select class="filter-sel" id="fMetaCliente" onchange="renderAMetas()"><option value="">Todos</option></select></div><div class="card"><div id="a-metas-list"></div></div></div>
       <div class="asec" id="a-alertas"><div style="margin-bottom:18px;font-size:14px;color:var(--muted)">Aniversários, renovações e vencimentos</div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>🎂 Aniversários da Empresa</div></div><div id="a-alerta-aniv"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>👥 Colaboradores</div></div><div id="a-alerta-colabs"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>🔄 Renovações</div></div><div id="a-alerta-renov"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>📋 Vencimentos</div></div><div id="a-alerta-venc"></div></div></div>
       <div class="asec" id="a-upload"><div class="g2"><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Upload para Cliente</div></div><div id="scriptStatusBar" style="margin-bottom:14px;padding:10px 13px;border-radius:9px;font-size:12px"></div><div class="fg2"><label>Cliente</label><select class="client-select" id="upClientSel" onchange="onUpClientChange()"></select></div><div class="fg2"><label>Tipo</label><select class="client-select" id="upTypeSel"><option>Arte / Design</option><option>Vídeo / Reels</option><option>Gravação</option><option>Documento</option><option>Relatório</option></select></div><div class="upload-zone" id="adminDropZone" onclick="document.getElementById('adminFileInput').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleAdminDrop(event)"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><p>Arraste ou <strong>clique</strong></p></div><input type="file" id="adminFileInput" multiple onchange="handleAdminFiles(this.files)"/><ul class="up-file-list" id="adminUpList"></ul><div id="openFolderBtn" style="display:none;margin-top:10px"><button onclick="openSelectedClientFolder()" style="background:var(--card2);border:1px solid var(--border);color:var(--blue);padding:8px 16px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:600;width:100%">📂 Abrir pasta no Drive</button></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Código Apps Script</div></div><div style="background:#0d0b18;border-radius:8px;padding:12px;font-size:10px;color:#a0e4b0;font-family:monospace;line-height:1.7;overflow-x:auto;border:1px solid var(--border);white-space:pre;max-height:340px;overflow-y:auto" id="scriptCode">// ═══ APPS SCRIPT COMPLETO ═══
@@ -656,7 +664,8 @@ async function loadFromSheets(){
   DB.platData     = (d.PlatData||[]).map(r=>({...r, id:+r.id||r.id, pct:+r.pct||0}));
   DB.topContents  = (d.TopContents||[]).map(r=>({...r, id:+r.id||r.id}));
   DB.clientDemands = [];
-  // Recalcula nextId
+  if(abas.includes('Arquivos'))
+    DB.arquivos = (d.Arquivos||[]).map(r=>({...r, id:+r.id||r.id}));
   const allIds = [...DB.clients,...DB.demands,...DB.activities,...DB.indicadores,
     ...DB.relatorios,...DB.mercado,...DB.estrategias,...DB.calEvents,
     ...DB.campanhas,...DB.metas,...DB.platData,...DB.topContents]
@@ -915,7 +924,15 @@ function doLogout(){
 // ═══════════════════════════════════════════
 // NAV
 // ═══════════════════════════════════════════
-// Mapa de seção → abas do Sheets que ela precisa
+// ── Arquivos salvos no Sheets ──
+// DB.arquivos = [{id, fileId, nome, size, tipo, cliente, pagina, data, link}]
+// tipo: 'arte'|'video'|'doc'|'grav'
+// pagina: 'drive'|'demandas'|'atividades'|'relatorios'|'indicadores'|'mercado'|'estrategias'|'campanhas'|'calendario'
+
+// Garante que DB.arquivos exista
+if(!DB.arquivos) DB.arquivos = [];
+
+// Carrega arquivos do Sheets ao navegar para a seção
 const sectionAbas = {
   indicadores: ['Indicadores','PlatData','TopContents'],
   relatorios:  ['Relatorios'],
@@ -924,6 +941,7 @@ const sectionAbas = {
   calendario:  ['Calendario'],
   campanhas:   ['Campanhas'],
   metas:       ['Metas'],
+  drive:       ['Arquivos'],
 };
 
 const cTitles={overview:'Visão Geral',activities:'Atividades',demands:'Demandas',indicadores:'Indicadores',relatorios:'Relatórios',mercado:'Mercado',estrategias:'Estratégias',calendario:'Calendário',campanhas:'Campanhas',drive:'Arquivos',preferencias:'Preferências',support:'Suporte'};
@@ -938,20 +956,20 @@ async function cNav(id,el){
   // Carrega seção sob demanda se necessário
   if(sectionAbas[id]){
     await ensureSection(id, sectionAbas[id]);
-    // Re-renderiza após carregar
     const renders = {
-      indicadores: ()=>{renderCIndicadores();},
-      relatorios:  ()=>{renderCRelatorios();},
-      mercado:     ()=>{renderCMercado();},
-      estrategias: ()=>{renderCEstrategias();},
-      calendario:  ()=>{renderCalendar();},
-      campanhas:   ()=>{renderCCampanhas();},
-      metas:       ()=>{renderCOverview();},
+      indicadores: ()=>{ renderCIndicadores(); },
+      relatorios:  ()=>{ renderCRelatorios(); renderArquivosSectionLinks('relatorios'); },
+      mercado:     ()=>{ renderCMercado(); renderArquivosSectionLinks('mercado'); },
+      estrategias: ()=>{ renderCEstrategias(); renderArquivosSectionLinks('estrategias'); },
+      calendario:  ()=>{ renderCalendar(); },
+      campanhas:   ()=>{ renderCCampanhas(); renderArquivosSectionLinks('campanhas'); },
+      metas:       ()=>{ renderCOverview(); },
+      drive:       ()=>{ renderClientFiles(); },
     };
     renders[id]?.();
   }
 
-  if(id==='drive') updateClientDriveLabel();
+  if(id==='drive'){ updateClientDriveLabel(); renderClientFiles(); }
   if(id==='preferencias') renderCPreferencias();
 }
 
@@ -980,13 +998,13 @@ async function aNav(id,el){
   if(aSectionAbas[id]){
     await ensureSection(key, aSectionAbas[id]);
     const renders = {
-      'a-indicadores': ()=>{populateAllSelects();renderAIndicadores();},
-      'a-relatorios':  ()=>{populateAllSelects();renderARelatorios();},
-      'a-mercado':     ()=>{populateAllSelects();renderAMercado();},
-      'a-estrategias': ()=>{populateAllSelects();renderAEstrategias();},
-      'a-calendario':  ()=>{populateAllSelects();renderACalendar();},
-      'a-campanhas':   ()=>{populateAllSelects();renderACampanhas();},
-      'a-metas':       ()=>{populateAllSelects();renderAMetas();},
+      'a-indicadores': ()=>{ populateAllSelects();renderAIndicadores();renderAArquivos('indicadores'); },
+      'a-relatorios':  ()=>{ populateAllSelects();renderARelatorios();renderAArquivos('relatorios'); },
+      'a-mercado':     ()=>{ populateAllSelects();renderAMercado();renderAArquivos('mercado'); },
+      'a-estrategias': ()=>{ populateAllSelects();renderAEstrategias();renderAArquivos('estrategias'); },
+      'a-calendario':  ()=>{ populateAllSelects();renderACalendar(); },
+      'a-campanhas':   ()=>{ populateAllSelects();renderACampanhas();renderAArquivos('campanhas'); },
+      'a-metas':       ()=>{ populateAllSelects();renderAMetas(); },
     };
     renders[id]?.();
   }
@@ -1460,10 +1478,74 @@ function updateClientDriveLabel(){const c=DB.clients.find(x=>x.user===currentUse
 function openClientDriveFolder(){const c=DB.clients.find(x=>x.user===currentUser?.user);if(c?.drive)window.open(`https://drive.google.com/drive/folders/${c.drive}`,'_blank');else showToast('⚠️ Pasta não configurada.','var(--red)');}
 function openSelectedClientFolder(){const nm=document.getElementById('upClientSel').value;const c=DB.clients.find(x=>x.nome===nm);if(c?.drive)window.open(`https://drive.google.com/drive/folders/${c.drive}`,'_blank');else showToast('⚠️ Pasta não configurada.','var(--red)');}
 function onUpClientChange(){document.getElementById('openFolderBtn').style.display=document.getElementById('upClientSel').value?'block':'none';}
-function filterFiles(t,el){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');document.querySelectorAll('.fc').forEach(c=>c.style.display=(t==='all'||c.dataset.type===t)?'block':'none');}
+// ── Render grade de arquivos (página Drive) ──
+function renderClientFiles(){
+  const grid = document.getElementById('filesGrid'); if(!grid) return;
+  // Combina arquivos do Sheets + sessão atual (sem duplicatas)
+  const sheetIds = new Set(DB.arquivos.map(a=>a.fileId));
+  const sessionOnly = clientUploadedFiles.filter(a=>!sheetIds.has(a.fileId));
+  const all = [...DB.arquivos, ...sessionOnly]
+    .filter(a=> !currentUser?.admin ? (a.cliente===currentUser?.emp||a.cliente===currentUser?.nome||a.cliente==='') : true);
+
+  if(!all.length){
+    grid.innerHTML='<div style="grid-column:1/-1;font-size:12px;color:var(--muted);padding:8px 0">Nenhum arquivo enviado ainda.</div>';
+    return;
+  }
+  grid.innerHTML = all.map(a=>`
+    <div class="fc" data-type="${a.tipo||'doc'}" onclick="window.open('${a.link}','_blank')" title="${a.nome}">
+      <div class="fn">${a.nome}</div>
+      <div class="fm">${a.size||''} • ${a.data||''}</div>
+      <div style="font-size:10px;color:var(--blue);margin-top:2px">🔗 Ver no Drive</div>
+    </div>`).join('');
+}
+
+// ── Render mini-lista de arquivos por seção (cliente e admin) ──
+function arquivosSection(pagina, clienteFilter=''){
+  const all = DB.arquivos.filter(a=>
+    a.pagina===pagina &&
+    (!clienteFilter || a.cliente===clienteFilter || !clienteFilter)
+  );
+  if(!all.length) return '<div style="font-size:12px;color:var(--muted)">Nenhum arquivo vinculado ainda.</div>';
+  return all.map(a=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--card2);border-radius:8px;margin-bottom:7px;border:1px solid var(--border);cursor:pointer;transition:.2s"
+      onclick="window.open('${a.link}','_blank')"
+      onmouseover="this.style.borderColor='var(--blue)'"
+      onmouseout="this.style.borderColor='var(--border)'">
+      <div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${a.nome}</div>
+      <div style="font-size:10px;color:var(--muted)">${a.cliente} • ${a.data||''} • ${a.size||''}</div></div>
+      <span style="font-size:11px;color:var(--blue);margin-left:12px;white-space:nowrap">🔗 Abrir</span>
+    </div>`).join('');
+}
+
+// ── Renderiza seção de arquivos vinculados em cada página ──
+function renderArquivosSectionLinks(pagina){
+  const elId = `arq-links-${pagina}`;
+  const el = document.getElementById(elId); if(!el) return;
+  const cf = currentUser?.admin ? '' : (currentUser?.emp||currentUser?.nome||'');
+  el.innerHTML = arquivosSection(pagina, cf);
+}
+
+// ── Admin: render arquivos por seção ──
+function renderAArquivos(pagina){
+  const elId = `a-arq-links-${pagina}`;
+  const el = document.getElementById(elId); if(!el) return;
+  const f = getFilter('f'+pagina.charAt(0).toUpperCase()+pagina.slice(1)+'Cliente') || '';
+  el.innerHTML = arquivosSection(pagina, f);
+}
+
+function filterFiles(t,el){
+  document.querySelectorAll('.tabs .tab').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('#filesGrid .fc').forEach(c=>{
+    c.style.display=(t==='all'||c.dataset.type===t)?'':'none';
+  });
+}
 
 // ─── Upload ───
 function fileToBase64(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(f);});}
+// Lista de arquivos enviados pelo cliente (persistida na sessão)
+let clientUploadedFiles = [];
+
 async function uploadFiles(files,clienteNome,listId){
   if(!files||!files.length)return;
   const list=document.getElementById(listId);if(!list)return;
@@ -1485,8 +1567,25 @@ async function uploadFiles(files,clienteNome,listId){
       if(!res.ok) throw new Error('HTTP '+res.status);
       const json=await res.json();
       setPr(100);
-      if(json.ok) setSt('bgr','Enviado ✓');
-      else setSt('bred',json.msg||'Erro no script');
+      if(json.ok){
+        setSt('bgr','Ver arquivo →',()=>window.open(`https://drive.google.com/file/d/${json.fileId}/view`,'_blank'));
+        // Salva na lista de arquivos enviados para exibir nos cards
+        const ext = f.name.split('.').pop().toLowerCase();
+        const tipo = ['jpg','jpeg','png','gif','webp'].includes(ext)?'arte':['mp4','mov','avi'].includes(ext)?'video':'doc';
+        const now = new Date();
+        const dateStr = `${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}`;
+        clientUploadedFiles.unshift({
+          name: f.name,
+          size: (f.size/1024/1024).toFixed(1)+'MB',
+          date: dateStr,
+          tipo,
+          fileId: json.fileId,
+          link: `https://drive.google.com/file/d/${json.fileId}/view`
+        });
+        renderClientFiles();
+      } else {
+        setSt('bred',json.msg||'Erro no script');
+      }
     }catch(e){
       setPr(0);
       if(fLink)setSt('bor','Abrir pasta →',()=>window.open(fLink,'_blank'));
