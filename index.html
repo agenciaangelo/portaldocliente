@@ -146,11 +146,28 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .fg2 select option{background:var(--card)}
 .fg2 textarea{resize:vertical;min-height:70px}
 
-/* CLICKABLE ROWS */
-.c-row{background:var(--card2);border-radius:9px;padding:13px 15px;border:1px solid var(--border);margin-bottom:8px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:12px}
+/* CLICKABLE ROWS — accordion */
+.c-row{background:var(--card2);border-radius:9px;padding:13px 15px;border:1px solid var(--border);margin-bottom:0;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:12px;border-radius:9px 9px 0 0}
 .c-row:hover{border-color:var(--orange);background:rgba(232,84,26,.04)}
-.c-row-arrow{color:var(--muted);font-size:14px;flex-shrink:0;transition:.2s}
-.c-row:hover .c-row-arrow{color:var(--orange)}
+.c-row-arrow{color:var(--muted);font-size:14px;flex-shrink:0;transition:transform .25s}
+.c-row.open .c-row-arrow{transform:rotate(90deg);color:var(--orange)}
+.c-row.open{border-color:var(--orange);border-bottom-color:transparent}
+.c-row-wrap{margin-bottom:8px}
+.c-row-wrap:last-child{margin-bottom:0}
+/* Accordion body */
+.accordion-body{display:none;background:var(--card);border:1px solid var(--orange);border-top:none;border-radius:0 0 9px 9px;padding:14px 16px;animation:accFade .18s ease}
+.accordion-body.open{display:block}
+@keyframes accFade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.acc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.acc-field{background:var(--card2);border-radius:8px;padding:10px 12px;border:1px solid var(--border)}
+.acc-field-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px}
+.acc-field-value{font-size:13px;font-weight:600;word-break:break-word}
+.acc-desc{font-size:12px;color:var(--muted);line-height:1.7;padding:10px 12px;background:var(--card2);border-radius:8px;border:1px solid var(--border);margin-bottom:10px}
+.acc-chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+.acc-prog{margin-bottom:10px}
+.acc-prog-bar{height:7px;background:var(--border);border-radius:4px;overflow:hidden;margin-top:5px}
+.acc-prog-fill{height:100%;border-radius:4px}
+.acc-actions{display:flex;gap:8px;padding-top:8px;border-top:1px solid var(--border)}
 
 /* FILTER BAR */
 .filter-bar{display:flex;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap}
@@ -364,7 +381,7 @@ tr:hover td{background:rgba(255,255,255,.015)}
     <div class="content">
       <div class="section active" id="c-overview"><div class="kpi-grid" id="c-kpi-overview"></div><div class="g2"><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Atividades Recentes</div></div><div id="c-ov-act-list"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Score do Cliente</div></div><div class="sw" id="c-score-ring"><div style="width:68px;height:68px;background:var(--card);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900">78</div></div><div style="text-align:center;font-size:11px;color:var(--muted);margin-bottom:12px">Colaboração excelente</div><div id="c-score-rows"></div></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>🎯 Metas do Mês</div></div><div id="c-metas-list"></div></div></div>
       <div class="section" id="c-activities"><div class="dem-form"><h3 style="font-size:15px;font-weight:800;margin-bottom:4px">📝 Adicionar Observação</h3><div class="fr"><div class="fg2"><label>Atividade</label><select id="actSel" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none"></select></div><div class="fg2"><label>Tipo</label><select id="actType" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none"><option>Aprovação</option><option>Ajuste</option><option>Comentário</option><option>Urgente</option></select></div></div><div class="fg2"><label>Mensagem</label><textarea id="actMsg" placeholder="Descreva seu feedback..."></textarea></div><button onclick="enviarObsAtividade()" class="btn-save">Enviar Feedback</button></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Todas as Atividades</div></div><div id="c-act-list"></div></div></div>
-      <div class="section" id="c-demands"><div class="dem-form"><h3 style="font-size:15px;font-weight:800;margin-bottom:4px" id="demFormTitle">➕ Nova Demanda</h3><input type="hidden" id="demEditId" value=""><div class="fr"><div class="fg2"><label>Título</label><input id="dTit"/></div><div class="fg2"><label>Tipo</label><select id="dTip"><option value="">Selecione...</option><option>Arte / Design</option><option>Vídeo / Reels</option><option>Gravação</option><option>Estratégia</option><option>Relatório</option><option>Outro</option></select></div></div><div class="fr"><div class="fg2"><label>Prazo</label><input id="dPra" type="date"/></div><div class="fg2"><label>Prioridade</label><select id="dPri"><option>Normal</option><option>Alta</option><option>Urgente</option></select></div></div><div class="fg2"><label>Descrição</label><textarea id="dDes" placeholder="Detalhe cores, referências, medidas..."></textarea></div><div style="display:flex;gap:10px;margin-top:8px"><button onclick="salvarDemanda()" class="btn-save" id="demBtnSave">Enviar Demanda</button><button onclick="cancelarEditDemanda()" class="btn-cancel" id="demBtnCancel" style="display:none">Cancelar</button></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Minhas Demandas</div></div><div id="c-dem-list"></div></div></div>
+      <div class="section" id="c-demands"><div class="dem-form" id="demFormWrap"><h3 style="font-size:15px;font-weight:800;margin-bottom:4px" id="demFormTitle">➕ Nova Demanda</h3><input type="hidden" id="demEditId" value=""><div class="fr"><div class="fg2"><label>Título</label><input id="dTit"/></div><div class="fg2"><label>Tipo</label><select id="dTip"><option value="">Selecione...</option><option>Arte / Design</option><option>Vídeo / Reels</option><option>Gravação</option><option>Estratégia</option><option>Relatório</option><option>Outro</option></select></div></div><div class="fr"><div class="fg2"><label>Prazo</label><input id="dPra" type="date"/></div><div class="fg2"><label>Prioridade</label><select id="dPri"><option>Normal</option><option>Alta</option><option>Urgente</option></select></div></div><div class="fg2"><label>Descrição</label><textarea id="dDes" placeholder="Detalhe cores, referências, medidas..."></textarea></div><div style="display:flex;gap:10px;margin-top:8px"><button onclick="salvarDemanda()" class="btn-save" id="demBtnSave">Enviar Demanda</button><button onclick="cancelarEditDemanda()" class="btn-cancel" id="demBtnCancel" style="display:none">Cancelar</button></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Minhas Demandas</div></div><div id="c-dem-list"></div></div></div>
       <div class="section" id="c-indicadores"><div class="readonly-notice">🔒 Indicadores atualizados pela Agência Ângelo.</div><div class="kpi-grid" id="c-ind-kpis"></div><div class="g2"><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Por Plataforma</div></div><div id="c-ind-chart"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Top Conteúdos</div></div><div id="c-ind-top"></div></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>🎯 Metas de Indicadores</div></div><div id="c-ind-metas"></div></div></div>
       <div class="section" id="c-relatorios"><div class="readonly-notice">🔒 Relatórios publicados pela Agência Ângelo.</div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Relatórios</div></div><div id="c-rel-list"></div></div></div>
       <div class="section" id="c-mercado"><div class="readonly-notice">🔒 Análise de mercado.</div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Tendências</div></div><div id="c-merc-list"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Concorrentes</div></div><div id="c-conc-list"></div></div></div>
@@ -883,8 +900,13 @@ function renderCOverview(){
       <div class="kc">${DB.campanhas.filter(c=>c.status==='Ativa').length} ativas</div>
     </div>
     <div class="kcard" onclick="cNav('demands',document.querySelectorAll('.ni')[2])">
-      <div class="kico" style="background:rgba(155,89,182,.12)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
-      <div class="kl">Demandas</div><div class="kv" style="color:var(--purple)">${DB.demands.length+DB.clientDemands.length}</div>
+      <div class="kico" style="background:rgba(155,89,182,.12)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      </div>
+      <div class="kl">Demandas
+        <span onclick="event.stopPropagation();goToNewDemand()" style="float:right;width:18px;height:18px;background:var(--purple);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:13px;cursor:pointer;line-height:1" title="Nova demanda">+</span>
+      </div>
+      <div class="kv" style="color:var(--purple)">${DB.demands.length+DB.clientDemands.length}</div>
       <div class="kc">${[...DB.demands,...DB.clientDemands].filter(d=>d.status==='Novo').length} novas</div>
     </div>`;
   document.getElementById('c-ov-act-list').innerHTML=DB.activities.slice(0,3).map(a=>`
@@ -902,8 +924,8 @@ function renderCOverview(){
 function renderCActivities(){
   const sel=document.getElementById('actSel');
   if(sel) sel.innerHTML=DB.activities.map(a=>`<option>${a.titulo}</option>`).join('');
-  document.getElementById('c-act-list').innerHTML=DB.activities.map(a=>`
-    <div class="c-row" onclick="detailAtividade(${a.id})">
+  document.getElementById('c-act-list').innerHTML=DB.activities.map(a=>{
+    const row=`<div class="c-row" onclick="toggleAccordion(this)">
       <div style="flex:1">
         <div style="font-size:13px;font-weight:700">${a.titulo}</div>
         <div style="font-size:11px;color:var(--muted);margin-top:2px">Resp: ${a.resp} • ${fmtDate(a.prazo)}</div>
@@ -914,27 +936,40 @@ function renderCActivities(){
       </div>
       <span class="b ${statusColor(a.status)}">${a.status}</span>
       <span class="c-row-arrow">›</span>
-    </div>`).join('');
+    </div>`;
+    const body=`<div class="accordion-body">
+      ${accChips(`<span class="b ${statusColor(a.status)}">${a.status}</span>`)}
+      ${accGrid(accField('Responsável',a.resp), accField('Prazo',fmtDate(a.prazo)))}
+      ${accField('Cliente',a.cliente)}
+      ${accProg(a.prog)}
+    </div>`;
+    return buildAccordionItem(row,body);
+  }).join('');
 }
 function renderCDemands(){
   const all=[...DB.clientDemands.filter(d=>!currentUser||d.clientUser===currentUser.user),...DB.demands];
-  document.getElementById('c-dem-list').innerHTML=all.length?all.map(d=>`
-    <div class="di" style="border-left-color:${d.status==='Concluído'?'var(--green)':d.status==='Novo'?'var(--orange)':'var(--blue)'}" onclick="detailDemanda(${d.id})">
-      <div class="dh">
-        <span style="font-size:13px;font-weight:700">${d.titulo}</span>
-        <div style="display:flex;gap:6px;align-items:center">
-          <span class="b ${prioColor(d.prioridade)}">${d.prioridade}</span>
-          <span class="b ${statusColor(d.status)}">${d.status}</span>
-          <span style="color:var(--muted)">›</span>
-        </div>
+  document.getElementById('c-dem-list').innerHTML=all.length?all.map(d=>{
+    const row=`<div class="c-row" onclick="toggleAccordion(this)" style="border-left:3px solid ${d.status==='Concluído'?'var(--green)':d.status==='Novo'?'var(--orange)':'var(--blue)'}">
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:700">${d.titulo}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:3px">${d.tipo}${d.prazo?' • '+fmtDate(d.prazo):''}</div>
       </div>
-      <div class="dd">${d.desc||''}</div>
-      <div class="df"><span>${d.tipo}</span>${d.prazo?`<span>${fmtDate(d.prazo)}</span>`:''}</div>
-      ${d.clientUser?`<div style="display:flex;gap:8px;margin-top:8px" onclick="event.stopPropagation()">
-        <button onclick="editClientDemand('${d.id}')" class="btn-edit">✏️ Editar</button>
-        <button onclick="removeClientDemand('${d.id}')" class="btn-rm">✕</button>
-      </div>`:''}
-    </div>`).join(''):'<div style="font-size:12px;color:var(--muted)">Nenhuma demanda ainda.</div>';
+      <div style="display:flex;gap:6px;align-items:center">
+        <span class="b ${prioColor(d.prioridade)}">${d.prioridade}</span>
+        <span class="b ${statusColor(d.status)}">${d.status}</span>
+      </div>
+      <span class="c-row-arrow">›</span>
+    </div>`;
+    const editBtns=d.clientUser?`<div class="acc-actions"><button onclick="event.stopPropagation();editClientDemand('${d.id}')" class="btn-edit">✏️ Editar</button><button onclick="event.stopPropagation();removeClientDemand('${d.id}')" class="btn-rm">✕ Remover</button></div>`:'';
+    const body=`<div class="accordion-body">
+      ${accChips(`<span class="b ${prioColor(d.prioridade)}">${d.prioridade}</span>`,`<span class="b ${statusColor(d.status)}">${d.status}</span>`)}
+      ${accGrid(accField('Tipo',d.tipo), accField('Prazo',fmtDate(d.prazo)))}
+      ${accField('Cliente',d.cliente)}
+      ${accDesc(d.desc)}
+      ${editBtns}
+    </div>`;
+    return buildAccordionItem(row,body);
+  }).join(''):'<div style="font-size:12px;color:var(--muted)">Nenhuma demanda ainda.</div>';
 }
 function renderCIndicadores(){
   document.getElementById('c-ind-kpis').innerHTML=DB.indicadores.map(i=>`
@@ -956,32 +991,52 @@ function renderCIndicadores(){
   document.getElementById('c-ind-metas').innerHTML=DB.metas.filter(m=>m.cat==='Indicadores').map(metaBarHTML).join('')||'<div style="font-size:12px;color:var(--muted)">Nenhuma meta.</div>';
 }
 function renderCRelatorios(){
-  document.getElementById('c-rel-list').innerHTML=DB.relatorios.map(r=>`
-    <div class="c-row" onclick="detailRelatorio(${r.id})">
-      <div style="width:36px;height:36px;border-radius:8px;background:rgba(232,84,26,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+  document.getElementById('c-rel-list').innerHTML=DB.relatorios.map(r=>{
+    const row=`<div class="c-row" onclick="toggleAccordion(this)">
+      <div style="width:34px;height:34px;border-radius:8px;background:rgba(232,84,26,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       </div>
       <div style="flex:1"><div style="font-size:13px;font-weight:600">${r.titulo}</div><div style="font-size:11px;color:var(--muted)">${fmtDate(r.data)}</div></div>
       <span class="c-row-arrow">›</span>
-    </div>`).join('');
+    </div>`;
+    const body=`<div class="accordion-body">
+      ${accGrid(accField('Data',fmtDate(r.data)), accField('Cliente',r.cliente))}
+      ${r.link?`<div class="acc-actions"><a href="${r.link}" target="_blank" class="btn-save" style="text-decoration:none;font-size:12px">📂 Abrir Relatório</a></div>`:''}
+    </div>`;
+    return buildAccordionItem(row,body);
+  }).join('');
 }
 function renderCMercado(){
-  document.getElementById('c-merc-list').innerHTML=DB.mercado.filter(m=>m.tipo==='Tendência').map(m=>`
-    <div class="c-row" onclick="detailMercado(${m.id})">
+  document.getElementById('c-merc-list').innerHTML=DB.mercado.filter(m=>m.tipo==='Tendência').map(m=>{
+    const row=`<div class="c-row" onclick="toggleAccordion(this)">
       <div style="width:9px;height:9px;border-radius:50%;background:var(--blue);flex-shrink:0"></div>
       <div style="flex:1"><div style="font-size:13px;font-weight:700">${m.titulo}</div><div style="font-size:12px;color:var(--muted)">${m.desc}</div></div>
       <span class="c-row-arrow">›</span>
-    </div>`).join('');
-  document.getElementById('c-conc-list').innerHTML=DB.mercado.filter(m=>m.tipo==='Concorrente').map(m=>`
-    <div class="c-row" onclick="detailMercado(${m.id})">
+    </div>`;
+    const body=`<div class="accordion-body">
+      ${accChips(`<span class="b bbl">${m.badge}</span>`,`<span class="b bye">${m.tipo}</span>`)}
+      ${accField('Cliente',m.cliente)}
+      ${accDesc(m.desc)}
+    </div>`;
+    return buildAccordionItem(row,body);
+  }).join('');
+  document.getElementById('c-conc-list').innerHTML=DB.mercado.filter(m=>m.tipo==='Concorrente').map(m=>{
+    const row=`<div class="c-row" onclick="toggleAccordion(this)">
       <div style="flex:1"><div style="font-size:13px;font-weight:700">${m.titulo}</div><div style="font-size:12px;color:var(--muted)">${m.desc}</div></div>
       <span class="b bbl">${m.badge}</span>
       <span class="c-row-arrow">›</span>
-    </div>`).join('');
+    </div>`;
+    const body=`<div class="accordion-body">
+      ${accChips(`<span class="b bpu">${m.tipo}</span>`,`<span class="b bbl">${m.badge}</span>`)}
+      ${accField('Cliente',m.cliente)}
+      ${accDesc(m.desc)}
+    </div>`;
+    return buildAccordionItem(row,body);
+  }).join('');
 }
 function renderCEstrategias(){
-  document.getElementById('c-est-list').innerHTML=DB.estrategias.map(e=>`
-    <div class="c-row" onclick="detailEstrategia(${e.id})">
+  document.getElementById('c-est-list').innerHTML=DB.estrategias.map(e=>{
+    const row=`<div class="c-row" onclick="toggleAccordion(this)">
       <div style="flex:1">
         <div style="font-size:13px;font-weight:700">${e.titulo}</div>
         <div style="font-size:12px;color:var(--muted);margin-top:2px">${e.desc}</div>
@@ -991,23 +1046,40 @@ function renderCEstrategias(){
         <span class="b ${statusColor(e.status)}">${e.status}</span>
       </div>
       <span class="c-row-arrow">›</span>
-    </div>`).join('');
+    </div>`;
+    const body=`<div class="accordion-body">
+      ${accChips(`<span class="b ${catColor(e.cat)}">${e.cat}</span>`,`<span class="b ${statusColor(e.status)}">${e.status}</span>`)}
+      ${accField('Cliente',e.cliente)}
+      ${accDesc(e.desc)}
+    </div>`;
+    return buildAccordionItem(row,body);
+  }).join('');
   document.getElementById('c-est-metas').innerHTML=DB.metas.filter(m=>m.cat==='Estratégia').map(metaBarHTML).join('')||'<div style="font-size:12px;color:var(--muted)">Nenhuma meta.</div>';
 }
 function renderCCampanhas(){
   const stC={Ativa:'bgr','Em captação':'bor',Planejamento:'bbl',Encerrada:'bred'};
-  document.getElementById('c-camp-list').innerHTML=DB.campanhas.map(c=>`
-    <div class="camp-card" onclick="detailCampanha(${c.id})">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <span style="font-size:14px;font-weight:800">🎯 ${c.nome}</span>
-        <div style="display:flex;align-items:center;gap:8px"><span class="b ${stC[c.status]||'bbl'}">${c.status}</span><span style="color:var(--muted)">›</span></div>
+  document.getElementById('c-camp-list').innerHTML=DB.campanhas.map(c=>{
+    const row=`<div class="c-row" onclick="toggleAccordion(this)">
+      <div style="flex:1">
+        <div style="font-size:14px;font-weight:800">🎯 ${c.nome}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">${c.plat} • ${fmtDate(c.ini)} – ${fmtDate(c.fim)}</div>
       </div>
-      <div style="font-size:12px;color:var(--muted);margin-bottom:10px">${c.plat} • ${fmtDate(c.ini)} – ${fmtDate(c.fim)}</div>
-      <div style="display:flex;gap:14px;flex-wrap:wrap">
-        ${c.budget?`<div><div style="font-size:10px;color:var(--muted)">Budget</div><div style="font-weight:700;color:var(--blue)">R$ ${c.budget}</div></div>`:''}
-        ${c.alcance&&c.alcance!=='—'?`<div><div style="font-size:10px;color:var(--muted)">Alcance</div><div style="font-weight:700;color:var(--green)">${c.alcance}</div></div>`:''}
-      </div>
-    </div>`).join('');
+      <span class="b ${stC[c.status]||'bbl'}">${c.status}</span>
+      <span class="c-row-arrow">›</span>
+    </div>`;
+    const body=`<div class="accordion-body">
+      ${accChips(`<span class="b ${stC[c.status]||'bbl'}">${c.status}</span>`)}
+      ${accField('Cliente',c.cliente)}
+      ${accField('Plataforma',c.plat)}
+      ${accGrid(accField('Início',fmtDate(c.ini)), accField('Fim',fmtDate(c.fim)))}
+      ${accGrid(
+        accField('Budget','R$ '+(c.budget||'—'),'var(--blue)'),
+        accField('Alcance',c.alcance||'—','var(--green)')
+      )}
+      ${c.cliques&&c.cliques!=='—'?accField('Cliques',c.cliques,'var(--orange)'):''}
+    </div>`;
+    return buildAccordionItem(row,body);
+  }).join('');
   document.getElementById('c-camp-metas').innerHTML=DB.metas.filter(m=>m.cat==='Campanhas').map(metaBarHTML).join('')||'<div style="font-size:12px;color:var(--muted)">Nenhuma meta.</div>';
 }
 function renderCPreferencias(){
@@ -1364,7 +1436,15 @@ async function deleteMetaById(id){if(!confirm('Remover?'))return;DB.metas=DB.met
 // ═══════════════════════════════════════
 // MISC / DRIVE / UPLOAD
 // ═══════════════════════════════════════
-function enviarObsAtividade(){const ativ=document.getElementById('actSel').value;const tipo=document.getElementById('actType').value;const msg=document.getElementById('actMsg').value.trim();if(!msg){showToast('⚠️ Escreva uma mensagem.','var(--red)');return;}const item=document.createElement('div');item.style.cssText='padding:12px;background:var(--card2);border-radius:9px;margin-bottom:8px;border:1px solid var(--orange);border-left:3px solid var(--orange)';item.innerHTML=`<div style="font-size:13px;font-weight:700">${tipo}: ${ativ}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${currentUser?.nome} • Agora</div><div style="font-size:12px;margin-top:4px">${msg}</div>`;document.getElementById('c-act-list').prepend(item);document.getElementById('actMsg').value='';showToast('✅ Observação enviada!');}
+function goToNewDemand(){
+  cNav('demands', document.querySelectorAll('.ni')[2]);
+  // Reseta o formulário e faz scroll até ele
+  setTimeout(()=>{
+    resetDemForm();
+    document.getElementById('demFormWrap')?.scrollIntoView({behavior:'smooth',block:'start'});
+    document.getElementById('dTit')?.focus();
+  }, 100);
+}const ativ=document.getElementById('actSel').value;const tipo=document.getElementById('actType').value;const msg=document.getElementById('actMsg').value.trim();if(!msg){showToast('⚠️ Escreva uma mensagem.','var(--red)');return;}const item=document.createElement('div');item.style.cssText='padding:12px;background:var(--card2);border-radius:9px;margin-bottom:8px;border:1px solid var(--orange);border-left:3px solid var(--orange)';item.innerHTML=`<div style="font-size:13px;font-weight:700">${tipo}: ${ativ}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${currentUser?.nome} • Agora</div><div style="font-size:12px;margin-top:4px">${msg}</div>`;document.getElementById('c-act-list').prepend(item);document.getElementById('actMsg').value='';showToast('✅ Observação enviada!');}
 function toggleResp(btn){btn.closest('.di').querySelector('.resp-box').classList.toggle('open');}
 function sendResp(btn){const box=btn.closest('.resp-box');const txt=box.querySelector('textarea').value.trim();if(!txt)return;box.innerHTML=`<div style="font-size:12px;color:var(--green)">✅ Resposta enviada: "${txt.substring(0,60)}"</div>`;showToast('Resposta enviada!');}
 function updateClientDriveLabel(){const c=DB.clients.find(x=>x.user===currentUser?.user);document.getElementById('driveFolderLabel').textContent=c?.drive?'Abrir minha pasta →':'Pasta não configurada';}
