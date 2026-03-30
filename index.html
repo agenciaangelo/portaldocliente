@@ -230,17 +230,6 @@ tr:hover td{background:rgba(255,255,255,.015)}
     <div class="field"><label>Senha</label><input id="lp" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/></div>
     <button class="btn-primary" onclick="doLogin()">Entrar</button>
     <div class="err" id="lerr">Usuário ou senha incorretos.</div>
-    <div class="login-script-toggle" onclick="toggleLoginScript()">
-      <span>⚙️ Integração Apps Script</span>
-      <span id="lsArrow">▸</span>
-    </div>
-    <div class="login-script-body" id="lsBody">
-      <div class="login-script-row" style="margin-top:8px">
-        <input id="loginScriptUrl" placeholder="https://script.google.com/macros/s/.../exec"/>
-        <button onclick="saveLoginScriptUrl()">Salvar</button>
-      </div>
-      <div class="login-script-status" id="loginUrlStatus"></div>
-    </div>
   </div>
 </div>
 
@@ -566,7 +555,7 @@ function resp(obj){
 // ═══════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════
-let SCRIPT_URL = localStorage.getItem('angelo_script_url') || '';
+let SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbySzeH4eLP6zKqb4oHYajzSc84iwa7dkutQbP8FlE0OkMND-GrNVWtlubpOL59XD_F2/exec';
 let currentUser = null;
 let usingFallback = false;
 
@@ -1487,7 +1476,7 @@ async function uploadFiles(files,clienteNome,listId){
   for(const f of Array.from(files)){
     const uid='f'+Date.now()+Math.random().toString(36).substr(2,4);
     const li=document.createElement('li');
-    li.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8" style="width:13px;height:13px;flex-shrink:0"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px">${f.name}</span><span style="color:var(--muted);font-size:11px">${(f.size/1024/1024).toFixed(1)}MB</span><span class="b bye" id="st_${uid}" style="font-size:10px">Aguardando</span><div class="up-progress"><div class="up-progress-bar" id="prb_${uid}" style="width:0%"></div></div>`;
+    li.innerHTML=`<span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px">${f.name}</span><span style="color:var(--muted);font-size:11px">${(f.size/1024/1024).toFixed(1)}MB</span><span class="b bye" id="st_${uid}" style="font-size:10px">Aguardando</span><div class="up-progress"><div class="up-progress-bar" id="prb_${uid}" style="width:0%"></div></div>`;
     list.appendChild(li);
     const setSt=(cls,txt,click)=>{const el=document.getElementById('st_'+uid);if(!el)return;el.className='b '+cls;el.textContent=txt;if(click){el.style.cursor='pointer';el.onclick=click;}};
     const setPr=p=>{const b=document.getElementById('prb_'+uid);if(b)b.style.width=p+'%';};
