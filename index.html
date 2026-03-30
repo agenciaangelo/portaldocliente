@@ -1022,7 +1022,15 @@ function metaBarHTML(m){
 function statusColor(s){return s==='Concluído'?'bgr':s==='Revisão'?'bbl':s==='Em andamento'||s==='Ativa'?'bor':s==='Encerrada'||s==='Inativo'?'bred':'bpu';}
 function prioColor(p){return p==='Urgente'?'bred':p==='Alta'?'bor':'bgr';}
 function catColor(c){return c==='Digital'?'bbl':c==='Conteúdo'?'bpu':c==='Offline'?'bgr':'bye';}
-function fmtDate(d){if(!d)return '—';const p=String(d).split('-');return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:d;}
+function fmtDate(d){
+  if(!d) return '—';
+  const s = String(d);
+  // Remove sufixo ISO (T00:00:00.000Z)
+  const clean = s.includes('T') ? s.split('T')[0] : s;
+  const p = clean.split('-');
+  if(p.length===3) return `${p[2]}/${p[1]}/${p[0]}`;
+  return clean;
+}
 function daysUntil(ds){if(!ds)return 9999;const t=new Date();t.setHours(0,0,0,0);const p=String(ds).split('-');return Math.round((new Date(+p[0],+p[1]-1,+p[2])-t)/86400000);}
 function daysUntilAnnual(ds){if(!ds)return 9999;const t=new Date();t.setHours(0,0,0,0);const p=String(ds).split('-');let d=new Date(t.getFullYear(),+p[1]-1,+p[2]);if(d<t)d=new Date(t.getFullYear()+1,+p[1]-1,+p[2]);return Math.round((d-t)/86400000);}
 
