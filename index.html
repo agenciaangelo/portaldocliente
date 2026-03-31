@@ -340,26 +340,10 @@ tr:hover td{background:rgba(255,255,255,.015)}
   <div class="login-box">
     <div class="login-brand">Agência Ângelo</div>
     <div class="login-sub">Portal do Cliente</div>
-
-    <form id="loginForm">
-
-      <div class="field">
-        <label>Usuário</label>
-        <input id="lu" type="text" placeholder="usuario ou admin"/>
-      </div>
-
-      <div class="field">
-        <label>Senha</label>
-        <input id="lp" type="password" placeholder="••••••••">
-      </div>
-
-      <button type="submit" class="btn-primary">Entrar</button>
-
-    </form>
-
-    <div class="err" id="lerr" style="display:none;">
-      Usuário ou senha incorretos.
-    </div>
+    <div class="field"><label>Usuário</label><input id="lu" type="text" placeholder="usuario ou admin"/></div>
+    <div class="field"><label>Senha</label><input id="lp" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+    <button class="btn-primary" onclick="doLogin()">Entrar</button>
+    <div class="err" id="lerr">Usuário ou senha incorretos.</div>
   </div>
 </div>
 
@@ -372,7 +356,6 @@ tr:hover td{background:rgba(255,255,255,.015)}
     </div>
     <nav class="sb-nav">
       <div class="ni active" onclick="cNav('overview',this)"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><span class="nl">Visão Geral</span></div>
-      <div class="ni" onclick="cNav('activities',this)"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><span class="nl">Atividades</span></div>
       <div class="ni" onclick="cNav('demands',this)"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg><span class="nl">Demandas</span></div>
       <div class="ni" onclick="cNav('indicadores',this)"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span class="nl">Indicadores</span></div>
       <div class="ni" onclick="cNav('relatorios',this)"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span class="nl">Relatórios</span></div>
@@ -397,8 +380,34 @@ tr:hover td{background:rgba(255,255,255,.015)}
     <div class="content">
       <div class="section active" id="c-overview"><div class="kpi-grid" id="c-kpi-overview"></div><div class="g2"><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Atividades Recentes</div></div><div id="c-ov-act-list"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Score do Cliente</div></div><div class="sw" id="c-score-ring"><div style="width:68px;height:68px;background:var(--card);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900">78</div></div><div style="text-align:center;font-size:11px;color:var(--muted);margin-bottom:12px">Colaboração excelente</div><div id="c-score-rows"></div></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>🎯 Metas do Mês</div></div><div id="c-metas-list"></div></div></div>
       <div class="section" id="c-activities"><div class="dem-form"><h3 style="font-size:15px;font-weight:800;margin-bottom:4px">📝 Adicionar Observação</h3><div class="fr"><div class="fg2"><label>Atividade</label><select id="actSel" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none"></select></div><div class="fg2"><label>Tipo</label><select id="actType" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none"><option>Aprovação</option><option>Ajuste</option><option>Comentário</option><option>Urgente</option></select></div></div><div class="fg2"><label>Mensagem</label><textarea id="actMsg" placeholder="Descreva seu feedback..."></textarea></div><button onclick="enviarObsAtividade()" class="btn-save">Enviar Feedback</button></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Todas as Atividades</div></div><div id="c-act-list"></div></div></div>
-      <div class="section" id="c-demands"><div class="dem-form" id="demFormWrap"><h3 style="font-size:15px;font-weight:800;margin-bottom:4px" id="demFormTitle">➕ Nova Demanda</h3><input type="hidden" id="demEditId" value=""><div class="fr"><div class="fg2"><label>Título</label><input id="dTit"/></div><div class="fg2"><label>Tipo</label><select id="dTip"><option value="">Selecione...</option><option>Arte / Design</option><option>Vídeo / Reels</option><option>Gravação</option><option>Estratégia</option><option>Relatório</option><option>Outro</option></select></div></div><div class="fr"><div class="fg2"><label>Prazo</label><input id="dPra" type="date"/></div><div class="fg2"><label>Prioridade</label><select id="dPri"><option>Normal</option><option>Alta</option><option>Urgente</option></select></div></div><div class="fg2"><label>Descrição</label><textarea id="dDes" placeholder="Detalhe cores, referências, medidas..."></textarea></div><div style="display:flex;gap:10px;margin-top:8px"><button onclick="salvarDemanda()" class="btn-save" id="demBtnSave">Enviar Demanda</button><button onclick="cancelarEditDemanda()" class="btn-cancel" id="demBtnCancel" style="display:none">Cancelar</button></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Minhas Demandas</div></div><div id="c-dem-list"></div></div></div>
-      <div class="section" id="c-indicadores"><div class="readonly-notice">🔒 Indicadores atualizados pela Agência Ângelo.</div><div class="kpi-grid" id="c-ind-kpis"></div><div class="g2"><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Por Plataforma</div></div><div id="c-ind-chart"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Top Conteúdos</div></div><div id="c-ind-top"></div></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>🎯 Metas de Indicadores</div></div><div id="c-ind-metas"></div></div></div>
+      <div class="section" id="c-demands"><div class="dem-form" id="demFormWrap"><h3 style="font-size:15px;font-weight:800;margin-bottom:4px" id="demFormTitle">➕ Nova Demanda</h3><input type="hidden" id="demEditId" value=""><div class="fr"><div class="fg2"><label>Título</label><input id="dTit"/></div><div class="fg2"><label>Tipo</label><select id="dTip"><option value="">Selecione...</option><option>Arte / Design</option><option>Vídeo / Reels</option><option>Gravação</option><option>Estratégia</option><option>Relatório</option><option>Outro</option></select></div></div><div class="fr"><div class="fg2"><label>Prazo</label><input id="dPra" type="date"/></div><div class="fg2"><label>Prioridade</label><select id="dPri"><option>Normal</option><option>Alta</option><option>Urgente</option></select></div></div>          <div class="fg2"><label>Descrição</label><textarea id="dDes" placeholder="Detalhe cores, referências, medidas..."></textarea></div>
+          <!-- Upload de arquivo na demanda -->
+          <div class="fg2"><label>Anexar Arquivo (opcional)</label>
+            <div class="upload-zone" style="padding:16px" id="demUpZone" onclick="document.getElementById('demFileIn').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="demFileDrop(event)">
+              <p>📎 Arraste ou <strong>clique para selecionar</strong></p>
+            </div>
+            <input type="file" id="demFileIn" onchange="demFileSelect(this.files)">
+            <ul class="up-file-list" id="demUpList"></ul>
+          </div><div style="display:flex;gap:10px;margin-top:8px"><button onclick="salvarDemanda()" class="btn-save" id="demBtnSave">Enviar Demanda</button><button onclick="cancelarEditDemanda()" class="btn-cancel" id="demBtnCancel" style="display:none">Cancelar</button></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Minhas Demandas</div></div><div id="c-dem-list"></div></div></div>
+      <div class="section" id="c-indicadores">
+        <!-- Filtro de período -->
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px">
+          <div class="tabs" id="indPeriodTabs">
+            <div class="tab active" onclick="setIndPeriod(7,this)">7 dias</div>
+            <div class="tab" onclick="setIndPeriod(30,this)">30 dias</div>
+            <div class="tab" onclick="setIndPeriod(90,this)">90 dias</div>
+            <div class="tab" onclick="setIndPeriod(180,this)">6 meses</div>
+            <div class="tab" onclick="setIndPeriod(365,this)">1 ano</div>
+          </div>
+          <button onclick="openClientIndModal()" class="btn-add" style="font-size:12px">+ Adicionar Indicador</button>
+        </div>
+        <div class="kpi-grid" id="c-ind-kpis"></div>
+        <div class="g2">
+          <div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Por Plataforma</div></div><div id="c-ind-chart"></div></div>
+          <div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Top Conteúdos</div></div><div id="c-ind-top"></div></div>
+        </div>
+        <div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>🎯 Metas de Indicadores</div></div><div id="c-ind-metas"></div></div>
+      </div>
       <div class="section" id="c-relatorios"><div class="readonly-notice">🔒 Relatórios publicados pela Agência Ângelo.</div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Relatórios</div></div><div id="c-rel-list"></div></div></div>
       <div class="section" id="c-mercado"><div class="readonly-notice">🔒 Análise de mercado.</div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Tendências</div></div><div id="c-merc-list"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Concorrentes</div></div><div id="c-conc-list"></div></div></div>
       <div class="section" id="c-estrategias"><div class="readonly-notice">🔒 Estratégias definidas pela Agência Ângelo.</div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Estratégias Ativas</div></div><div id="c-est-list"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>🎯 Metas de Estratégia</div></div><div id="c-est-metas"></div></div></div>
@@ -406,7 +415,7 @@ tr:hover td{background:rgba(255,255,255,.015)}
       <div class="section" id="c-campanhas"><div class="readonly-notice">🔒 Campanhas gerenciadas pela Agência Ângelo.</div><div id="c-camp-list"></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>🎯 Metas de Campanhas</div></div><div id="c-camp-metas"></div></div></div>
       <div class="section" id="c-drive"><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Enviar Arquivo</div></div><div class="upload-zone" id="dropZone" onclick="document.getElementById('fileInput').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event)"><p>Arraste ou <strong>clique para selecionar</strong></p><p style="font-size:11px;margin-top:4px;color:var(--muted)">PDF, JPG, PNG, MP4, ZIP até 50MB</p></div><input type="file" id="fileInput" multiple onchange="handleFileSelect(this.files)"/><ul class="up-file-list" id="upList"></ul></div><div class="card"><div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:11px;background:var(--card2);border-radius:9px;border:1px solid var(--border);font-size:12px"><span style="color:var(--muted)">Pasta Drive:</span><span style="color:var(--blue);cursor:pointer;font-weight:600" id="driveFolderLabel" onclick="openClientDriveFolder()">Abrir minha pasta →</span></div><div class="tabs"><div class="tab active" onclick="filterFiles('all',this)">Todos</div><div class="tab" onclick="filterFiles('arte',this)">Artes</div><div class="tab" onclick="filterFiles('video',this)">Vídeos</div><div class="tab" onclick="filterFiles('doc',this)">Docs</div></div><div class="fg-grid" id="filesGrid"></div></div></div>
       <div class="section" id="c-preferencias"><div class="pref-section"><div class="pref-title">🔔 Notificações</div><div class="toggle-row"><span>E-mail ao receber novo arquivo</span><div class="toggle on" onclick="this.classList.toggle('on')"></div></div><div class="toggle-row"><span>Alertas de prazo próximo</span><div class="toggle on" onclick="this.classList.toggle('on')"></div></div><div class="toggle-row"><span>Resumo semanal</span><div class="toggle" onclick="this.classList.toggle('on')"></div></div></div><div class="pref-section"><div class="pref-title">👤 Dados de Contato</div><div class="fr"><div class="fg2"><label>Nome</label><input id="prefNome"/></div><div class="fg2"><label>E-mail</label><input id="prefEmail"/></div></div><div class="fr"><div class="fg2"><label>WhatsApp</label><input id="prefWpp"/></div><div class="fg2"><label>Instagram</label><input id="prefInsta"/></div></div><button onclick="showToast('✅ Preferências salvas!')" class="btn-save">Salvar</button></div><div class="card" id="c-contrato-info"></div></div>
-      <div class="section" id="c-support"><div class="g2"><div><div style="background:linear-gradient(135deg,var(--card2),var(--card));border-radius:13px;padding:22px;border:1px solid var(--border);text-align:center;margin-bottom:18px"><div style="width:60px;height:60px;background:linear-gradient(135deg,var(--orange),#9b1e6b);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;margin:0 auto 10px">A</div><div style="font-size:15px;font-weight:800;margin-bottom:3px">Adson Ângelo</div><div style="font-size:12px;color:var(--muted);margin-bottom:14px">Consultor de Marketing</div><div style="display:flex;gap:8px;justify-content:center"><button onclick="showToast('WhatsApp: (85) 99999-0000')" class="btn-save" style="width:auto;padding:9px 18px">WhatsApp</button><button onclick="showToast('contato@agenciaangelo.com')" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:9px 18px;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer">Email</button></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Mensagem</div></div><textarea placeholder="Sua dúvida..." style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:10px;color:var(--text);font-size:12px;resize:vertical;min-height:80px;margin-bottom:10px;font-family:inherit;outline:none"></textarea><button onclick="showToast('Mensagem enviada!')" class="btn-save" style="width:auto;padding:9px 20px;font-size:12px">Enviar</button></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>FAQ</div></div><div id="c-faq-list"></div></div></div></div>
+      <div class="section" id="c-support"><div class="g2"><div><div style="background:linear-gradient(135deg,var(--card2),var(--card));border-radius:13px;padding:22px;border:1px solid var(--border);text-align:center;margin-bottom:18px"><div style="width:60px;height:60px;background:linear-gradient(135deg,var(--orange),#9b1e6b);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;margin:0 auto 10px">A</div><div style="font-size:15px;font-weight:800;margin-bottom:3px">Adson Ângelo</div><div style="font-size:12px;color:var(--muted);margin-bottom:14px">Consultor de Marketing</div><div style="display:flex;gap:8px;justify-content:center">              <button onclick="window.open('https://wa.me/5584991236489','_blank')" class="btn-save" style="width:auto;padding:9px 18px">WhatsApp</button><button onclick="showToast('contato@agenciaangelo.com')" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:9px 18px;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer">Email</button></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Mensagem</div></div><textarea placeholder="Sua dúvida..." style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:10px;color:var(--text);font-size:12px;resize:vertical;min-height:80px;margin-bottom:10px;font-family:inherit;outline:none"></textarea><button onclick="showToast('Mensagem enviada!')" class="btn-save" style="width:auto;padding:9px 20px;font-size:12px">Enviar</button></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>FAQ</div></div><div id="c-faq-list"></div></div></div></div>
     </div>
   </main>
 </div>
@@ -480,8 +489,14 @@ tr:hover td{background:rgba(255,255,255,.015)}
 <div class="modal-bg" id="mercModal"><div class="modal"><h3 id="mercModalTitle">Tendência / Concorrente</h3><input type="hidden" id="mercEditId" value=""><div class="fg2"><label>Cliente</label><select id="mercCliente" class="client-select"></select></div><div class="fg2"><label>Título</label><input id="mercTit"/></div><div class="fg2"><label>Descrição</label><textarea id="mercDesc"></textarea></div><div class="fr"><div class="fg2"><label>Tipo</label><select id="mercTipo"><option>Tendência</option><option>Concorrente</option></select></div><div class="fg2"><label>Badge</label><input id="mercBadge"/></div></div><div class="modal-btns"><button class="btn-save" onclick="saveMercado()">Salvar</button><button class="btn-cancel" onclick="closeModal('mercModal')">Cancelar</button><button class="btn-danger" id="btnDeleteMerc" onclick="deleteMercado()" style="display:none">Remover</button></div></div></div>
 <div class="modal-bg" id="estModal"><div class="modal"><h3 id="estModalTitle">Estratégia</h3><input type="hidden" id="estEditId" value=""><div class="fg2"><label>Cliente</label><select id="estCliente" class="client-select"></select></div><div class="fg2"><label>Título</label><input id="estTit"/></div><div class="fg2"><label>Descrição</label><textarea id="estDesc"></textarea></div><div class="fr"><div class="fg2"><label>Categoria</label><select id="estCat"><option>Digital</option><option>Conteúdo</option><option>Offline</option><option>Outros</option></select></div><div class="fg2"><label>Status</label><select id="estStatus"><option>Ativo</option><option>Pausado</option><option>Planejamento</option></select></div></div><div class="modal-btns"><button class="btn-save" onclick="saveEstrategia()">Salvar</button><button class="btn-cancel" onclick="closeModal('estModal')">Cancelar</button><button class="btn-danger" id="btnDeleteEst" onclick="deleteEstrategia()" style="display:none">Remover</button></div></div></div>
 <div class="modal-bg" id="calModal"><div class="modal"><h3 id="calModalTitle">Evento</h3><input type="hidden" id="calEditId" value=""><div class="fg2"><label>Título</label><input id="calEvTitle"/></div><div class="fr"><div class="fg2"><label>Data</label><input id="calEvDate" type="date"/></div><div class="fg2"><label>Tipo</label><select id="calEvType"><option value="post">📸 Post</option><option value="video">🎬 Vídeo/Reels</option><option value="stories">💫 Stories</option><option value="campanha">🎯 Campanha</option><option value="reuniao">📅 Reunião</option></select></div></div><div class="fg2"><label>Cliente</label><select id="calEvClient" class="client-select"></select></div><div class="fg2"><label>Observação</label><textarea id="calEvObs"></textarea></div><div class="modal-btns"><button class="btn-save" onclick="saveCalEvent()">Salvar</button><button class="btn-cancel" onclick="closeModal('calModal')">Cancelar</button><button class="btn-danger" id="btnDeleteCal" onclick="deleteCalEvent()" style="display:none">Remover</button></div></div></div>
-<div class="modal-bg" id="campModal"><div class="modal"><h3 id="campModalTitle">Campanha</h3><input type="hidden" id="campEditId" value=""><div class="fg2"><label>Cliente</label><select id="campCliente" class="client-select"></select></div><div class="fg2"><label>Nome</label><input id="campNome"/></div><div class="fr"><div class="fg2"><label>Início</label><input id="campIni" type="date"/></div><div class="fg2"><label>Fim</label><input id="campFim" type="date"/></div></div><div class="fr"><div class="fg2"><label>Plataforma</label><input id="campPlat"/></div><div class="fg2"><label>Budget (R$)</label><input id="campBudget" type="number"/></div></div><div class="fr"><div class="fg2"><label>Alcance</label><input id="campAlcance"/></div><div class="fg2"><label>Cliques</label><input id="campCliques"/></div></div><div class="fg2"><label>Status</label><select id="campStatus"><option>Ativa</option><option>Em captação</option><option>Planejamento</option><option>Encerrada</option></select></div><div class="modal-btns"><button class="btn-save" onclick="saveCampanha()">Salvar</button><button class="btn-cancel" onclick="closeModal('campModal')">Cancelar</button><button class="btn-danger" id="btnDeleteCamp" onclick="deleteCampanha()" style="display:none">Remover</button></div></div></div>
+<div class="modal-bg" id="campModal"><div class="modal"><h3 id="campModalTitle">Campanha</h3><input type="hidden" id="campEditId" value=""><div class="fg2"><label>Cliente</label><select id="campCliente" class="client-select"></select></div><div class="fg2"><label>Nome</label><input id="campNome"/></div><div class="fr"><div class="fg2"><label>Início</label><input id="campIni" type="date"/></div><div class="fg2"><label>Fim</label><input id="campFim" type="date"/></div></div><div class="fr"><div class="fg2"><label>Plataforma</label><input id="campPlat"/></div><div class="fg2"><label>Budget (R$)</label><input id="campBudget" type="number"/></div></div><div class="fr"><div class="fg2"><label>Alcance Real</label><input id="campAlcance"/></div><div class="fg2"><label>Cliques Reais</label><input id="campCliques"/></div></div><div class="fg2"><label>Status</label><select id="campStatus"><option>Ativa</option><option>Em captação</option><option>Planejamento</option><option>Encerrada</option></select></div>
+<div class="section-sep">🎯 Meta da Campanha</div>
+<div class="fr"><div class="fg2"><label>Meta (descrição)</label><input id="campMetaTit" placeholder="Ex: Alcançar 50K de alcance"/></div><div class="fg2"><label>Valor Meta</label><input id="campMetaTotal" type="number" placeholder="50000"/></div></div>
+<div class="fr"><div class="fg2"><label>Unidade da Meta</label><input id="campMetaUnidade" placeholder="alcance, cliques, R$..."/></div><div class="fg2"><label>Cor da Meta</label><input id="campMetaCor" type="color" value="#2ecc71" style="height:42px;cursor:pointer"/></div></div>
+<div class="modal-btns"><button class="btn-save" onclick="saveCampanha()">Salvar</button><button class="btn-cancel" onclick="closeModal('campModal')">Cancelar</button><button class="btn-danger" id="btnDeleteCamp" onclick="deleteCampanha()" style="display:none">Remover</button></div></div></div>
 <div class="modal-bg" id="metaModal"><div class="modal"><h3 id="metaModalTitle">Meta</h3><input type="hidden" id="metaEditId" value=""><div class="fg2"><label>Cliente</label><select id="metaCliente" class="client-select"></select></div><div class="fg2"><label>Título</label><input id="metaTit"/></div><div class="fr"><div class="fg2"><label>Valor Atual</label><input id="metaAtual" type="number"/></div><div class="fg2"><label>Meta</label><input id="metaTotal" type="number"/></div></div><div class="fr"><div class="fg2"><label>Unidade</label><input id="metaUnidade" placeholder="impressões, R$, seguidores"/></div><div class="fg2"><label>Categoria</label><select id="metaCat"><option>Geral</option><option>Indicadores</option><option>Campanhas</option><option>Estratégia</option></select></div></div><div class="fg2"><label>Cor</label><input id="metaCor" type="color" value="#e8541a" style="height:42px;cursor:pointer"/></div><div class="modal-btns"><button class="btn-save" onclick="saveMeta()">Salvar</button><button class="btn-cancel" onclick="closeModal('metaModal')">Cancelar</button><button class="btn-danger" id="btnDeleteMeta" onclick="deleteMeta()" style="display:none">Remover</button></div></div></div>
+
+<div class="modal-bg" id="clientIndModal"><div class="modal"><h3 id="clientIndModalTitle">Meu Indicador</h3><input type="hidden" id="clientIndEditId" value=""><div class="fr"><div class="fg2"><label>Métrica</label><input id="clientIndMetrica" placeholder="Ex: Taxa de conversão"/></div><div class="fg2"><label>Valor</label><input id="clientIndValor" placeholder="Ex: 3,2%"/></div></div><div class="fr"><div class="fg2"><label>Variação</label><input id="clientIndVar" placeholder="Ex: +0.5%"/></div><div class="fg2"><label>Plataforma</label><select id="clientIndPlat"><option>Instagram</option><option>TikTok</option><option>Facebook</option><option>Google Ads</option><option>LinkedIn</option><option>Geral</option></select></div></div><div class="fr"><div class="fg2"><label>% barra</label><input id="clientIndPct" type="number" min="0" max="100" placeholder="75"/></div><div class="fg2"><label>Cor</label><input id="clientIndCor" type="color" value="#e8541a" style="height:42px;cursor:pointer"/></div></div><div class="modal-btns"><button class="btn-save" onclick="saveClientInd()">Salvar</button><button class="btn-cancel" onclick="closeModal('clientIndModal')">Cancelar</button><button class="btn-danger" id="btnDeleteClientInd" onclick="deleteClientInd()" style="display:none">Remover</button></div></div></div>
 
 <div class="toast" id="toast"></div>
 
@@ -489,7 +504,8 @@ tr:hover td{background:rgba(255,255,255,.015)}
 // ═══════════════════════════════════════
 // CONFIG
 // ═══════════════════════════════════════
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwBrQAzH_sKellplaBXZBB0yeQfFH9HpKlCxqRa5tEpC30R5LWrhDTXaxpawlBJZFjV/exec'
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzferaNSNKiUXyjIxaCjKsJDerz3DLpVx7iNYCThrBFP3cUQnz5lp791CUJg_2HsMOQ/exec';
+let currentUser = null;
 
 // ═══════════════════════════════════════
 // DB LOCAL
@@ -987,11 +1003,15 @@ function renderCDemands(){
   }).join(''):'<div style="font-size:12px;color:var(--muted)">Nenhuma demanda ainda.</div>';
 }
 function renderCIndicadores(){
-  document.getElementById('c-ind-kpis').innerHTML=DB.indicadores.map(i=>`
-    <div class="kcard" onclick="detailIndicador(${i.id})">
-      <div class="kl">${i.metrica}</div>
+  const periodLabel = indPeriodDays===7?'7 dias':indPeriodDays===30?'30 dias':indPeriodDays===90?'90 dias':indPeriodDays===180?'6 meses':'1 ano';
+  const myCliente = currentUser?.emp||currentUser?.nome||'';
+  const list = DB.indicadores.filter(i=> i.cliente===myCliente||i.cliente==='Todos'||i.clientUser===currentUser?.user);
+  document.getElementById('c-ind-kpis').innerHTML=list.map(i=>`
+    <div class="kcard" style="position:relative">
+      <div class="kl">${i.metrica} <span style="font-size:9px;color:var(--muted)">${periodLabel}</span></div>
       <div class="kv" style="color:${i.cor}">${i.valor}</div>
       <div class="kc up">${i.variacao}</div>
+      ${i.clientUser===currentUser?.user?`<button onclick="openClientIndModal(${i.id})" style="position:absolute;top:10px;right:10px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:11px">✏️</button>`:''}
     </div>`).join('');
   document.getElementById('c-ind-chart').innerHTML=DB.platData.map(p=>`
     <div class="chart-bar-row"><div class="chart-bar-label">${p.nome}</div>
@@ -1437,8 +1457,60 @@ function deleteCalEvent(){const id=document.getElementById('calEditId').value;de
 async function deleteCalEventById(id){if(!confirm('Remover?'))return;DB.calEvents=DB.calEvents.filter(x=>String(x.id)!==String(id));await sheetsDelete('Calendario',id);renderACalendar();renderCalendar();showToast('🗑️ Removido.');}
 
 // Campanhas
-function openCampModal(id){document.getElementById('campEditId').value=id||'';document.getElementById('campModalTitle').textContent=id?'Editar Campanha':'Nova Campanha';document.getElementById('btnDeleteCamp').style.display=id?'block':'none';populateAllSelects();if(id){const c=DB.campanhas.find(x=>x.id===id);if(c){document.getElementById('campCliente').value=c.cliente;document.getElementById('campNome').value=c.nome;const ini=String(c.ini).includes('T')?String(c.ini).split('T')[0]:String(c.ini);const fim=String(c.fim).includes('T')?String(c.fim).split('T')[0]:String(c.fim);document.getElementById('campIni').value=ini;document.getElementById('campFim').value=fim;document.getElementById('campPlat').value=c.plat;document.getElementById('campBudget').value=c.budget;document.getElementById('campAlcance').value=c.alcance||'';document.getElementById('campCliques').value=c.cliques||'';document.getElementById('campStatus').value=c.status;}}else{['campNome','campIni','campFim','campPlat','campBudget','campAlcance','campCliques'].forEach(x=>document.getElementById(x).value='');}document.getElementById('campModal').classList.add('show');}
-async function saveCampanha(){const n=document.getElementById('campNome').value.trim();if(!n)return;const id=document.getElementById('campEditId').value;const c={id:id||nid(),cliente:document.getElementById('campCliente').value,nome:n,ini:document.getElementById('campIni').value,fim:document.getElementById('campFim').value,plat:document.getElementById('campPlat').value,budget:document.getElementById('campBudget').value,alcance:document.getElementById('campAlcance').value||'—',cliques:document.getElementById('campCliques').value||'—',status:document.getElementById('campStatus').value};if(id){const idx=DB.campanhas.findIndex(x=>String(x.id)===String(id));if(idx>=0)DB.campanhas[idx]=c;}else DB.campanhas.push(c);await sheetsSave('Campanhas',c);renderACampanhas();renderCCampanhas();closeModal('campModal');showToast('✅ Campanha salva!');}
+function openCampModal(id){
+  document.getElementById('campEditId').value=id||'';
+  document.getElementById('campModalTitle').textContent=id?'Editar Campanha':'Nova Campanha';
+  document.getElementById('btnDeleteCamp').style.display=id?'block':'none';
+  populateAllSelects();
+  if(id){
+    const c=DB.campanhas.find(x=>x.id===id);
+    if(c){
+      document.getElementById('campCliente').value=c.cliente;
+      document.getElementById('campNome').value=c.nome;
+      const ini=String(c.ini).includes('T')?String(c.ini).split('T')[0]:String(c.ini);
+      const fim=String(c.fim).includes('T')?String(c.fim).split('T')[0]:String(c.fim);
+      document.getElementById('campIni').value=ini;
+      document.getElementById('campFim').value=fim;
+      document.getElementById('campPlat').value=c.plat;
+      document.getElementById('campBudget').value=c.budget;
+      document.getElementById('campAlcance').value=c.alcance||'';
+      document.getElementById('campCliques').value=c.cliques||'';
+      document.getElementById('campStatus').value=c.status;
+      document.getElementById('campMetaTit').value=c.metaTit||'';
+      document.getElementById('campMetaTotal').value=c.metaTotal||'';
+      document.getElementById('campMetaUnidade').value=c.metaUnidade||'';
+      document.getElementById('campMetaCor').value=c.metaCor||'#2ecc71';
+    }
+  } else {
+    ['campNome','campIni','campFim','campPlat','campBudget','campAlcance','campCliques','campMetaTit','campMetaTotal','campMetaUnidade'].forEach(x=>document.getElementById(x).value='');
+    document.getElementById('campMetaCor').value='#2ecc71';
+  }
+  document.getElementById('campModal').classList.add('show');
+}
+async function saveCampanha(){
+  const n=document.getElementById('campNome').value.trim();if(!n)return;
+  const id=document.getElementById('campEditId').value;
+  const c={
+    id:id||nid(),
+    cliente:document.getElementById('campCliente').value,
+    nome:n,
+    ini:document.getElementById('campIni').value,
+    fim:document.getElementById('campFim').value,
+    plat:document.getElementById('campPlat').value,
+    budget:document.getElementById('campBudget').value,
+    alcance:document.getElementById('campAlcance').value||'—',
+    cliques:document.getElementById('campCliques').value||'—',
+    status:document.getElementById('campStatus').value,
+    metaTit:document.getElementById('campMetaTit').value,
+    metaTotal:parseFloat(document.getElementById('campMetaTotal').value)||0,
+    metaUnidade:document.getElementById('campMetaUnidade').value,
+    metaCor:document.getElementById('campMetaCor').value
+  };
+  if(id){const idx=DB.campanhas.findIndex(x=>String(x.id)===String(id));if(idx>=0)DB.campanhas[idx]=c;}
+  else DB.campanhas.push(c);
+  await sheetsSave('Campanhas',c);
+  renderACampanhas();renderCCampanhas();closeModal('campModal');showToast('✅ Campanha salva!');
+}
 function deleteCampanha(){const id=document.getElementById('campEditId').value;deleteCampById(id);closeModal('campModal');}
 async function deleteCampById(id){if(!confirm('Remover?'))return;DB.campanhas=DB.campanhas.filter(x=>String(x.id)!==String(id));await sheetsDelete('Campanhas',id);renderACampanhas();renderCCampanhas();showToast('🗑️ Removida.');}
 
@@ -1448,95 +1520,131 @@ async function saveMeta(){const t=document.getElementById('metaTit').value.trim(
 function deleteMeta(){const id=document.getElementById('metaEditId').value;deleteMetaById(id);closeModal('metaModal');}
 async function deleteMetaById(id){if(!confirm('Remover?'))return;DB.metas=DB.metas.filter(x=>String(x.id)!==String(id));await sheetsDelete('Metas',id);renderAMetas();renderCOverview();showToast('🗑️ Removida.');}
 
-// ═══════════════════════════════════════
-// MISC / DRIVE / UPLOAD
-// ═══════════════════════════════════════
-function enviarObservacao(){
-  const ativ = document.getElementById('actSel').value;
-  const tipo = document.getElementById('actType').value;
-  const msg = document.getElementById('actMsg').value.trim();
-
-  if(!msg){
-    showToast('⚠️ Escreva uma mensagem.','var(--red)');
-    return;
-  }
-  const item = document.createElement('div');
-  item.style.cssText='padding:12px;background:var(--card2);border-radius:9px;margin-bottom:8px;border:1px solid var(--orange);border-left:3px solid var(--orange)';
-
-  item.innerHTML = `
-    <div style="font-size:13px;font-weight:700">${tipo}: ${ativ}</div>
-    <div style="font-size:11px;color:var(--muted);margin-top:2px">
-      ${currentUser?.nome} • Agora
-    </div>
-    <div style="font-size:12px;margin-top:4px">${msg}</div>
-  `;
-
-  document.getElementById('c-act-list').prepend(item);
-  document.getElementById('actMsg').value = '';
-
-  showToast('✅ Observação enviada!');
+// ── Filtro de período dos indicadores ──
+let indPeriodDays = 7;
+function setIndPeriod(days, el){
+  indPeriodDays = days;
+  document.querySelectorAll('#indPeriodTabs .tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderCIndicadores();
 }
 
-// ═══════════════════════════════════════
-// APPS SCRIPT CONFIG
-// ═══════════════════════════════════════
-<script>
-// APPS SCRIPT CONFIG
-// ═══════════════════════════════════════
-function updateScriptStatusBar(){
-  const bar=document.getElementById('scriptStatusBar');
-  if(!bar)return;
-  bar.style.cssText='background:rgba(46,204,113,.08);border:1px solid rgba(46,204,113,.3);border-radius:9px;padding:10px 13px;font-size:12px;margin-bottom:14px';
-  bar.innerHTML='<span style="color:var(--green)">✅ Apps Script configurado</span>';
-}
-
-function openUrlModal(){
-  document.getElementById('urlStatus').innerHTML='<span style="color:var(--green)">✅ URL fixa no código</span>';
-  document.getElementById('urlModal').classList.add('show');
-}
-
-function salvarUrl(){
-  closeModal('urlModal');
-  showToast('URL já está fixa no código.');
-}
-
-function removerUrl(){
-  showToast('URL fixa — não pode ser removida via portal.','var(--yellow)');
-}
-
-function copyScript(){
-  navigator.clipboard.writeText(document.getElementById('scriptCode').textContent)
-    .then(()=>showToast('✅ Código copiado!'))
-    .catch(()=>showToast('⚠️ Copie manualmente.','var(--yellow)'));
-}
-
-function closeModal(id){
-  document.getElementById(id).classList.remove('show');
-}
-
-document.addEventListener('click',e=>{
-  if(e.target.classList.contains('modal-bg'))
-    e.target.classList.remove('show');
-});
-
-
-// 🔐 LOGIN
-document.getElementById('loginForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  doLogin();
-});
-
-function doLogin() {
-  const user = document.getElementById('lu').value;
-  const pass = document.getElementById('lp').value;
-
-  if(user === 'admin' && pass === '1234'){
-    alert('Login OK 🚀');
+// ── Modal indicador do cliente ──
+function openClientIndModal(id){
+  document.getElementById('clientIndEditId').value = id||'';
+  document.getElementById('clientIndModalTitle').textContent = id ? 'Editar Indicador' : 'Novo Indicador';
+  document.getElementById('btnDeleteClientInd').style.display = id ? 'block' : 'none';
+  if(id){
+    const i=DB.indicadores.find(x=>String(x.id)===String(id)&&x.clientUser===currentUser?.user);
+    if(i){document.getElementById('clientIndMetrica').value=i.metrica;document.getElementById('clientIndValor').value=i.valor;document.getElementById('clientIndVar').value=i.variacao;document.getElementById('clientIndPlat').value=i.plat;document.getElementById('clientIndPct').value=i.pct;document.getElementById('clientIndCor').value=i.cor;}
   } else {
-    document.getElementById('lerr').style.display = 'block';
+    ['clientIndMetrica','clientIndValor','clientIndVar','clientIndPct'].forEach(x=>document.getElementById(x).value='');
+    document.getElementById('clientIndCor').value='#e8541a';
+  }
+  document.getElementById('clientIndModal').classList.add('show');
+}
+async function saveClientInd(){
+  const m=document.getElementById('clientIndMetrica').value.trim();
+  if(!m){showToast('⚠️ Preencha a métrica.','var(--red)');return;}
+  const editId=document.getElementById('clientIndEditId').value;
+  const i={id:editId||nid(),clientUser:currentUser?.user||'',cliente:currentUser?.emp||currentUser?.nome||'',metrica:m,valor:document.getElementById('clientIndValor').value,variacao:document.getElementById('clientIndVar').value,plat:document.getElementById('clientIndPlat').value,pct:parseInt(document.getElementById('clientIndPct').value)||50,cor:document.getElementById('clientIndCor').value};
+  if(editId){const idx=DB.indicadores.findIndex(x=>String(x.id)===String(editId));if(idx>=0)DB.indicadores[idx]=i;}
+  else DB.indicadores.push(i);
+  await sheetsSave('Indicadores',i);
+  renderCIndicadores(); closeModal('clientIndModal'); showToast('✅ Indicador salvo!');
+}
+async function deleteClientInd(){
+  const id=document.getElementById('clientIndEditId').value;
+  if(!confirm('Remover?'))return;
+  DB.indicadores=DB.indicadores.filter(x=>String(x.id)!==String(id));
+  await sheetsDelete('Indicadores',id);
+  renderCIndicadores(); closeModal('clientIndModal'); showToast('🗑️ Removido.');
+}
+
+// ── Upload na demanda do cliente ──
+function demFileDrop(e){e.preventDefault();document.getElementById('demUpZone').classList.remove('drag');demFileSelect(e.dataTransfer.files);}
+function demFileSelect(files){if(!files||!files[0])return;uploadFiles(files,currentUser?.nome,'demUpList','demandas');}
+
+// ── Campanha com meta integrada ──
+function goToNewDemand(){
+  cNav('demands', document.querySelectorAll('.ni')[2]);
+  // Reseta o formulário e faz scroll até ele
+  setTimeout(()=>{
+    resetDemForm();
+    document.getElementById('demFormWrap')?.scrollIntoView({behavior:'smooth',block:'start'});
+    document.getElementById('dTit')?.focus();
+  }, 100);
+}const ativ=document.getElementById('actSel').value;const tipo=document.getElementById('actType').value;const msg=document.getElementById('actMsg').value.trim();if(!msg){showToast('⚠️ Escreva uma mensagem.','var(--red)');return;}const item=document.createElement('div');item.style.cssText='padding:12px;background:var(--card2);border-radius:9px;margin-bottom:8px;border:1px solid var(--orange);border-left:3px solid var(--orange)';item.innerHTML=`<div style="font-size:13px;font-weight:700">${tipo}: ${ativ}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${currentUser?.nome} • Agora</div><div style="font-size:12px;margin-top:4px">${msg}</div>`;document.getElementById('c-act-list').prepend(item);document.getElementById('actMsg').value='';showToast('✅ Observação enviada!');}
+function toggleResp(btn){btn.closest('.di').querySelector('.resp-box').classList.toggle('open');}
+function sendResp(btn){const box=btn.closest('.resp-box');const txt=box.querySelector('textarea').value.trim();if(!txt)return;box.innerHTML=`<div style="font-size:12px;color:var(--green)">✅ Resposta enviada: "${txt.substring(0,60)}"</div>`;showToast('Resposta enviada!');}
+function updateClientDriveLabel(){const c=DB.clients.find(x=>x.user===currentUser?.user);document.getElementById('driveFolderLabel').textContent=c?.drive?'Abrir minha pasta →':'Pasta não configurada';}
+function openClientDriveFolder(){const c=DB.clients.find(x=>x.user===currentUser?.user);if(c?.drive)window.open(`https://drive.google.com/drive/folders/${c.drive}`,'_blank');else showToast('⚠️ Pasta não configurada.','var(--red)');}
+function openSelectedClientFolder(){const nm=document.getElementById('upClientSel').value;const c=DB.clients.find(x=>x.nome===nm);if(c?.drive)window.open(`https://drive.google.com/drive/folders/${c.drive}`,'_blank');else showToast('⚠️ Pasta não configurada.','var(--red)');}
+function onUpClientChange(){document.getElementById('openFolderBtn').style.display=document.getElementById('upClientSel').value?'block':'none';}
+function filterFiles(t,el){document.querySelectorAll('.tabs .tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');document.querySelectorAll('#filesGrid .fc').forEach(c=>{c.style.display=(t==='all'||c.dataset.type===t)?'':'none';});}
+function renderClientFiles(){
+  const grid=document.getElementById('filesGrid');if(!grid)return;
+  const cf=currentUser?.emp||currentUser?.nome||'';
+  const all=DB.arquivos.filter(a=>a.cliente===cf||a.cliente===currentUser?.nome);
+  if(!all.length){grid.innerHTML='<div style="grid-column:1/-1;font-size:12px;color:var(--muted);padding:8px 0">Nenhum arquivo enviado ainda.</div>';return;}
+  grid.innerHTML=all.map(a=>`
+    <div class="fc" data-type="${a.tipo||'doc'}" onclick="window.open('${a.link}','_blank')" title="${a.nome}">
+      <div class="fn">${a.nome}</div>
+      <div class="fm">${a.size||''} • ${a.data||''}</div>
+      <div style="font-size:10px;color:var(--blue);margin-top:2px">🔗 Ver no Drive</div>
+    </div>`).join('');
+}
+
+function fileToBase64(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(f);});}
+
+async function uploadFiles(files,clienteNome,listId,pagina='drive'){
+  if(!files||!files.length)return;
+  const list=document.getElementById(listId);if(!list)return;
+  const co=DB.clients.find(c=>c.nome===clienteNome||c.user===currentUser?.user);
+  const fId=co?.drive||null,fLink=fId?`https://drive.google.com/drive/folders/${fId}`:null;
+  for(const f of Array.from(files)){
+    const uid='f'+Date.now()+Math.random().toString(36).substr(2,4);
+    const li=document.createElement('li');
+    li.innerHTML=`<span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px">${f.name}</span><span style="color:var(--muted);font-size:11px">${(f.size/1024/1024).toFixed(1)}MB</span><span class="b bye" id="st_${uid}" style="font-size:10px">Aguardando</span><div class="up-progress"><div class="up-progress-bar" id="prb_${uid}" style="width:0%"></div></div>`;
+    list.appendChild(li);
+    const setSt=(cls,txt,click)=>{const el=document.getElementById('st_'+uid);if(!el)return;el.className='b '+cls;el.textContent=txt;if(click){el.style.cursor='pointer';el.onclick=click;}};
+    const setPr=p=>{const b=document.getElementById('prb_'+uid);if(b)b.style.width=p+'%';};
+    if(!SCRIPT_URL){if(fLink)setSt('bor','Abrir pasta →',()=>window.open(fLink,'_blank'));else setSt('bred','Sem pasta');continue;}
+    if(!fId){setSt('bred','Sem pasta');continue;}
+    setSt('bbl','Enviando…');setPr(30);
+    try{
+      const b64=await fileToBase64(f);setPr(60);
+      const res=await fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'uploadArquivo',folderId:fId,fileName:f.name,mimeType:f.type||'application/octet-stream',data:b64,cliente:clienteNome})});
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      const json=await res.json();setPr(100);
+      if(json.ok){
+        const ext=f.name.split('.').pop().toLowerCase();
+        const tipo=['jpg','jpeg','png','gif','webp'].includes(ext)?'arte':['mp4','mov','avi','webm'].includes(ext)?'video':['wav','mp3','aac'].includes(ext)?'grav':'doc';
+        const now=new Date();
+        const arq={id:nid(),fileId:json.fileId,nome:f.name,size:(f.size/1024/1024).toFixed(1)+'MB',tipo,cliente:clienteNome||currentUser?.emp||currentUser?.nome||'',pagina,data:`${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()}`,link:`https://drive.google.com/file/d/${json.fileId}/view`};
+        DB.arquivos.unshift(arq);
+        await sheetsSave('Arquivos',arq);
+        setSt('bgr','Ver arquivo →',()=>window.open(arq.link,'_blank'));
+        renderClientFiles();
+      } else setSt('bred',json.msg||'Erro');
+    }catch(e){setPr(0);if(fLink)setSt('bor','Abrir pasta →',()=>window.open(fLink,'_blank'));else setSt('bred','Erro: '+e.message);}
   }
 }
-</script>
+function handleFileSelect(files){uploadFiles(files,currentUser?.nome,'upList','drive');}
+function handleDrop(e){e.preventDefault();document.getElementById('dropZone').classList.remove('drag');uploadFiles(e.dataTransfer.files,currentUser?.nome,'upList','drive');}
+function handleAdminFiles(files){const cl=document.getElementById('upClientSel').value;if(!cl){showToast('⚠️ Selecione um cliente.','var(--red)');return;}uploadFiles(files,cl,'adminUpList','drive');}
+function handleAdminDrop(e){e.preventDefault();document.getElementById('adminDropZone').classList.remove('drag');const cl=document.getElementById('upClientSel').value;if(!cl){showToast('⚠️ Selecione um cliente.','var(--red)');return;}uploadFiles(e.dataTransfer.files,cl,'adminUpList','drive');}
 
+// ═══════════════════════════════════════
+// APPS SCRIPT CONFIG
+// ═══════════════════════════════════════
+function updateScriptStatusBar(){const bar=document.getElementById('scriptStatusBar');if(!bar)return;bar.style.cssText='background:rgba(46,204,113,.08);border:1px solid rgba(46,204,113,.3);border-radius:9px;padding:10px 13px;font-size:12px;margin-bottom:14px';bar.innerHTML='<span style="color:var(--green)">✅ Apps Script configurado</span>';}
+function openUrlModal(){document.getElementById('urlStatus').innerHTML='<span style="color:var(--green)">✅ URL fixa no código</span>';document.getElementById('urlModal').classList.add('show');}
+function salvarUrl(){closeModal('urlModal');showToast('URL já está fixa no código.');}
+function removerUrl(){showToast('URL fixa — não pode ser removida via portal.','var(--yellow)');}
+function copyScript(){navigator.clipboard.writeText(document.getElementById('scriptCode').textContent).then(()=>showToast('✅ Código copiado!')).catch(()=>showToast('⚠️ Copie manualmente.','var(--yellow)'));}
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+document.addEventListener('click',e=>{if(e.target.classList.contains('modal-bg'))e.target.classList.remove('show');});
+</script>
 </body>
 </html>
