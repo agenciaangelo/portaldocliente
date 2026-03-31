@@ -1480,15 +1480,47 @@ function enviarObservacao(){
 // ═══════════════════════════════════════
 // APPS SCRIPT CONFIG
 // ═══════════════════════════════════════
-function updateScriptStatusBar(){const bar=document.getElementById('scriptStatusBar');if(!bar)return;bar.style.cssText='background:rgba(46,204,113,.08);border:1px solid rgba(46,204,113,.3);border-radius:9px;padding:10px 13px;font-size:12px;margin-bottom:14px';bar.innerHTML='<span style="color:var(--green)">✅ Apps Script configurado</span>';}
-function openUrlModal(){document.getElementById('urlStatus').innerHTML='<span style="color:var(--green)">✅ URL fixa no código</span>';document.getElementById('urlModal').classList.add('show');}
-function salvarUrl(){closeModal('urlModal');showToast('URL já está fixa no código.');}
-function removerUrl(){showToast('URL fixa — não pode ser removida via portal.','var(--yellow)');}
-function copyScript(){navigator.clipboard.writeText(document.getElementById('scriptCode').textContent).then(()=>showToast('✅ Código copiado!')).catch(()=>showToast('⚠️ Copie manualmente.','var(--yellow)'));}
-function closeModal(id){document.getElementById(id).classList.remove('show');}
-document.addEventListener('click',e=>{if(e.target.classList.contains('modal-bg'))e.target.classList.remove('show');});
-</script>
 <script>
+// APPS SCRIPT CONFIG
+// ═══════════════════════════════════════
+function updateScriptStatusBar(){
+  const bar=document.getElementById('scriptStatusBar');
+  if(!bar)return;
+  bar.style.cssText='background:rgba(46,204,113,.08);border:1px solid rgba(46,204,113,.3);border-radius:9px;padding:10px 13px;font-size:12px;margin-bottom:14px';
+  bar.innerHTML='<span style="color:var(--green)">✅ Apps Script configurado</span>';
+}
+
+function openUrlModal(){
+  document.getElementById('urlStatus').innerHTML='<span style="color:var(--green)">✅ URL fixa no código</span>';
+  document.getElementById('urlModal').classList.add('show');
+}
+
+function salvarUrl(){
+  closeModal('urlModal');
+  showToast('URL já está fixa no código.');
+}
+
+function removerUrl(){
+  showToast('URL fixa — não pode ser removida via portal.','var(--yellow)');
+}
+
+function copyScript(){
+  navigator.clipboard.writeText(document.getElementById('scriptCode').textContent)
+    .then(()=>showToast('✅ Código copiado!'))
+    .catch(()=>showToast('⚠️ Copie manualmente.','var(--yellow)'));
+}
+
+function closeModal(id){
+  document.getElementById(id).classList.remove('show');
+}
+
+document.addEventListener('click',e=>{
+  if(e.target.classList.contains('modal-bg'))
+    e.target.classList.remove('show');
+});
+
+
+// 🔐 LOGIN
 document.getElementById('loginForm').addEventListener('submit', function(e) {
   e.preventDefault();
   doLogin();
@@ -1505,5 +1537,6 @@ function doLogin() {
   }
 }
 </script>
+
 </body>
 </html>
