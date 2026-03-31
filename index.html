@@ -336,16 +336,18 @@ tr:hover td{background:rgba(255,255,255,.015)}
 </div>
 
 <!-- LOGIN -->
-<div id="loginScreen">
-  <div class="login-box">
-    <div class="login-brand">Agência Ângelo</div>
-    <div class="login-sub">Portal do Cliente</div>
-    <div class="field"><label>Usuário</label><input id="lu" type="text" placeholder="usuario ou admin"/></div>
-    <div class="field"><label>Senha</label><input id="lp" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/></div>
-    <button class="btn-primary" onclick="doLogin()">Entrar</button>
-    <div class="err" id="lerr">Usuário ou senha incorretos.</div>
-  </div>
-</div>
+<script>
+function doLogin() {
+  const user = document.getElementById('lu').value;
+  const pass = document.getElementById('lp').value;
+
+  if (user === 'admin' && pass === '1234') {
+    alert('Login realizado com sucesso!');
+  } else {
+    document.getElementById('lerr').style.display = 'block';
+  }
+}
+</script>
 
 <!-- CLIENT APP -->
 <div id="clientApp">
