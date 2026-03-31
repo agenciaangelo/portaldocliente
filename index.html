@@ -336,18 +336,16 @@ tr:hover td{background:rgba(255,255,255,.015)}
 </div>
 
 <!-- LOGIN -->
-<script>
-function doLogin() {
-  const user = document.getElementById('lu').value;
-  const pass = document.getElementById('lp').value;
-
-  if (user === 'admin' && pass === '1234') {
-    alert('Login realizado com sucesso!');
-  } else {
-    document.getElementById('lerr').style.display = 'block';
-  }
-}
-</script>
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-brand">Agência Ângelo</div>
+    <div class="login-sub">Portal do Cliente</div>
+    <div class="field"><label>Usuário</label><input id="lu" type="text" placeholder="usuario ou admin"/></div>
+    <div class="field"><label>Senha</label><input id="lp" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+    <button class="btn-primary" onclick="doLogin()">Entrar</button>
+    <div class="err" id="lerr">Usuário ou senha incorretos.</div>
+  </div>
+</div>
 
 <!-- CLIENT APP -->
 <div id="clientApp">
@@ -506,7 +504,7 @@ function doLogin() {
 // ═══════════════════════════════════════
 // CONFIG
 // ═══════════════════════════════════════
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyZROXHxOKi5wDYVFjny1QI4qwRllqaKhoOaMZ-Qq7oLQ7vosPbtyo9u-KWlWwSKNri/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzferaNSNKiUXyjIxaCjKsJDerz3DLpVx7iNYCThrBFP3cUQnz5lp791CUJg_2HsMOQ/exec';
 let currentUser = null;
 
 // ═══════════════════════════════════════
@@ -1531,28 +1529,112 @@ function setIndPeriod(days, el){
   renderCIndicadores();
 }
 
-function sendClientAction(){
-  const ativ = document.getElementById('actSel').value;
-  const tipo = document.getElementById('actType').value;
-  const msg = document.getElementById('actMsg').value.trim();
-
-  if(!msg){
-    showToast('⚠️ Escreva uma mensagem.','var(--red)');
-    return;
+// ── Modal indicador do cliente ──
+function openClientIndModal(id){
+  document.getElementById('clientIndEditId').value = id||'';
+  document.getElementById('clientIndModalTitle').textContent = id ? 'Editar Indicador' : 'Novo Indicador';
+  document.getElementById('btnDeleteClientInd').style.display = id ? 'block' : 'none';
+  if(id){
+    const i=DB.indicadores.find(x=>String(x.id)===String(id)&&x.clientUser===currentUser?.user);
+    if(i){document.getElementById('clientIndMetrica').value=i.metrica;document.getElementById('clientIndValor').value=i.valor;document.getElementById('clientIndVar').value=i.variacao;document.getElementById('clientIndPlat').value=i.plat;document.getElementById('clientIndPct').value=i.pct;document.getElementById('clientIndCor').value=i.cor;}
+  } else {
+    ['clientIndMetrica','clientIndValor','clientIndVar','clientIndPct'].forEach(x=>document.getElementById(x).value='');
+    document.getElementById('clientIndCor').value='#e8541a';
   }
-
-  const item = document.createElement('div');
-  item.style.cssText='padding:12px;background:var(--card2);border-radius:9px;margin-bottom:8px;border:1px solid var(--orange);border-left:3px solid var(--orange)';
-  item.innerHTML = `
-    <div style="font-size:13px;font-weight:700">${tipo}: ${ativ}</div>
-    <div style="font-size:11px;color:var(--muted);margin-top:2px">${currentUser?.nome} • Agora</div>
-    <div style="font-size:12px;margin-top:4px">${msg}</div>
-  `;
-
-  document.getElementById('c-act-list').prepend(item);
-  document.getElementById('actMsg').value = '';
-  showToast('✅ Observação enviada!');
+  document.getElementById('clientIndModal').classList.add('show');
 }
+async function saveClientInd(){
+  const m=document.getElementById('clientIndMetrica').value.trim();
+  if(!m){showToast('⚠️ Preencha a métrica.','var(--red)');return;}
+  const editId=document.getElementById('clientIndEditId').value;
+  const i={id:editId||nid(),clientUser:currentUser?.user||'',cliente:currentUser?.emp||currentUser?.nome||'',metrica:m,valor:document.getElementById('clientIndValor').value,variacao:document.getElementById('clientIndVar').value,plat:document.getElementById('clientIndPlat').value,pct:parseInt(document.getElementById('clientIndPct').value)||50,cor:document.getElementById('clientIndCor').value};
+  if(editId){const idx=DB.indicadores.findIndex(x=>String(x.id)===String(editId));if(idx>=0)DB.indicadores[idx]=i;}
+  else DB.indicadores.push(i);
+  await sheetsSave('Indicadores',i);
+  renderCIndicadores(); closeModal('clientIndModal'); showToast('✅ Indicador salvo!');
+}
+async function deleteClientInd(){
+  const id=document.getElementById('clientIndEditId').value;
+  if(!confirm('Remover?'))return;
+  DB.indicadores=DB.indicadores.filter(x=>String(x.id)!==String(id));
+  await sheetsDelete('Indicadores',id);
+  renderCIndicadores(); closeModal('clientIndModal'); showToast('🗑️ Removido.');
+}
+
+// ── Upload na demanda do cliente ──
+function demFileDrop(e){e.preventDefault();document.getElementById('demUpZone').classList.remove('drag');demFileSelect(e.dataTransfer.files);}
+function demFileSelect(files){if(!files||!files[0])return;uploadFiles(files,currentUser?.nome,'demUpList','demandas');}
+
+// ── Campanha com meta integrada ──
+function goToNewDemand(){
+  cNav('demands', document.querySelectorAll('.ni')[2]);
+  // Reseta o formulário e faz scroll até ele
+  setTimeout(()=>{
+    resetDemForm();
+    document.getElementById('demFormWrap')?.scrollIntoView({behavior:'smooth',block:'start'});
+    document.getElementById('dTit')?.focus();
+  }, 100);
+}const ativ=document.getElementById('actSel').value;const tipo=document.getElementById('actType').value;const msg=document.getElementById('actMsg').value.trim();if(!msg){showToast('⚠️ Escreva uma mensagem.','var(--red)');return;}const item=document.createElement('div');item.style.cssText='padding:12px;background:var(--card2);border-radius:9px;margin-bottom:8px;border:1px solid var(--orange);border-left:3px solid var(--orange)';item.innerHTML=`<div style="font-size:13px;font-weight:700">${tipo}: ${ativ}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${currentUser?.nome} • Agora</div><div style="font-size:12px;margin-top:4px">${msg}</div>`;document.getElementById('c-act-list').prepend(item);document.getElementById('actMsg').value='';showToast('✅ Observação enviada!');}
+function toggleResp(btn){btn.closest('.di').querySelector('.resp-box').classList.toggle('open');}
+function sendResp(btn){const box=btn.closest('.resp-box');const txt=box.querySelector('textarea').value.trim();if(!txt)return;box.innerHTML=`<div style="font-size:12px;color:var(--green)">✅ Resposta enviada: "${txt.substring(0,60)}"</div>`;showToast('Resposta enviada!');}
+function updateClientDriveLabel(){const c=DB.clients.find(x=>x.user===currentUser?.user);document.getElementById('driveFolderLabel').textContent=c?.drive?'Abrir minha pasta →':'Pasta não configurada';}
+function openClientDriveFolder(){const c=DB.clients.find(x=>x.user===currentUser?.user);if(c?.drive)window.open(`https://drive.google.com/drive/folders/${c.drive}`,'_blank');else showToast('⚠️ Pasta não configurada.','var(--red)');}
+function openSelectedClientFolder(){const nm=document.getElementById('upClientSel').value;const c=DB.clients.find(x=>x.nome===nm);if(c?.drive)window.open(`https://drive.google.com/drive/folders/${c.drive}`,'_blank');else showToast('⚠️ Pasta não configurada.','var(--red)');}
+function onUpClientChange(){document.getElementById('openFolderBtn').style.display=document.getElementById('upClientSel').value?'block':'none';}
+function filterFiles(t,el){document.querySelectorAll('.tabs .tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');document.querySelectorAll('#filesGrid .fc').forEach(c=>{c.style.display=(t==='all'||c.dataset.type===t)?'':'none';});}
+function renderClientFiles(){
+  const grid=document.getElementById('filesGrid');if(!grid)return;
+  const cf=currentUser?.emp||currentUser?.nome||'';
+  const all=DB.arquivos.filter(a=>a.cliente===cf||a.cliente===currentUser?.nome);
+  if(!all.length){grid.innerHTML='<div style="grid-column:1/-1;font-size:12px;color:var(--muted);padding:8px 0">Nenhum arquivo enviado ainda.</div>';return;}
+  grid.innerHTML=all.map(a=>`
+    <div class="fc" data-type="${a.tipo||'doc'}" onclick="window.open('${a.link}','_blank')" title="${a.nome}">
+      <div class="fn">${a.nome}</div>
+      <div class="fm">${a.size||''} • ${a.data||''}</div>
+      <div style="font-size:10px;color:var(--blue);margin-top:2px">🔗 Ver no Drive</div>
+    </div>`).join('');
+}
+
+function fileToBase64(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(f);});}
+
+async function uploadFiles(files,clienteNome,listId,pagina='drive'){
+  if(!files||!files.length)return;
+  const list=document.getElementById(listId);if(!list)return;
+  const co=DB.clients.find(c=>c.nome===clienteNome||c.user===currentUser?.user);
+  const fId=co?.drive||null,fLink=fId?`https://drive.google.com/drive/folders/${fId}`:null;
+  for(const f of Array.from(files)){
+    const uid='f'+Date.now()+Math.random().toString(36).substr(2,4);
+    const li=document.createElement('li');
+    li.innerHTML=`<span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px">${f.name}</span><span style="color:var(--muted);font-size:11px">${(f.size/1024/1024).toFixed(1)}MB</span><span class="b bye" id="st_${uid}" style="font-size:10px">Aguardando</span><div class="up-progress"><div class="up-progress-bar" id="prb_${uid}" style="width:0%"></div></div>`;
+    list.appendChild(li);
+    const setSt=(cls,txt,click)=>{const el=document.getElementById('st_'+uid);if(!el)return;el.className='b '+cls;el.textContent=txt;if(click){el.style.cursor='pointer';el.onclick=click;}};
+    const setPr=p=>{const b=document.getElementById('prb_'+uid);if(b)b.style.width=p+'%';};
+    if(!SCRIPT_URL){if(fLink)setSt('bor','Abrir pasta →',()=>window.open(fLink,'_blank'));else setSt('bred','Sem pasta');continue;}
+    if(!fId){setSt('bred','Sem pasta');continue;}
+    setSt('bbl','Enviando…');setPr(30);
+    try{
+      const b64=await fileToBase64(f);setPr(60);
+      const res=await fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'uploadArquivo',folderId:fId,fileName:f.name,mimeType:f.type||'application/octet-stream',data:b64,cliente:clienteNome})});
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      const json=await res.json();setPr(100);
+      if(json.ok){
+        const ext=f.name.split('.').pop().toLowerCase();
+        const tipo=['jpg','jpeg','png','gif','webp'].includes(ext)?'arte':['mp4','mov','avi','webm'].includes(ext)?'video':['wav','mp3','aac'].includes(ext)?'grav':'doc';
+        const now=new Date();
+        const arq={id:nid(),fileId:json.fileId,nome:f.name,size:(f.size/1024/1024).toFixed(1)+'MB',tipo,cliente:clienteNome||currentUser?.emp||currentUser?.nome||'',pagina,data:`${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()}`,link:`https://drive.google.com/file/d/${json.fileId}/view`};
+        DB.arquivos.unshift(arq);
+        await sheetsSave('Arquivos',arq);
+        setSt('bgr','Ver arquivo →',()=>window.open(arq.link,'_blank'));
+        renderClientFiles();
+      } else setSt('bred',json.msg||'Erro');
+    }catch(e){setPr(0);if(fLink)setSt('bor','Abrir pasta →',()=>window.open(fLink,'_blank'));else setSt('bred','Erro: '+e.message);}
+  }
+}
+function handleFileSelect(files){uploadFiles(files,currentUser?.nome,'upList','drive');}
+function handleDrop(e){e.preventDefault();document.getElementById('dropZone').classList.remove('drag');uploadFiles(e.dataTransfer.files,currentUser?.nome,'upList','drive');}
+function handleAdminFiles(files){const cl=document.getElementById('upClientSel').value;if(!cl){showToast('⚠️ Selecione um cliente.','var(--red)');return;}uploadFiles(files,cl,'adminUpList','drive');}
+function handleAdminDrop(e){e.preventDefault();document.getElementById('adminDropZone').classList.remove('drag');const cl=document.getElementById('upClientSel').value;if(!cl){showToast('⚠️ Selecione um cliente.','var(--red)');return;}uploadFiles(e.dataTransfer.files,cl,'adminUpList','drive');}
+
 // ═══════════════════════════════════════
 // APPS SCRIPT CONFIG
 // ═══════════════════════════════════════
