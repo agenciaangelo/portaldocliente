@@ -340,54 +340,85 @@ tr:hover td{background:rgba(255,255,255,.015)}
   <div class="login-box">
     <div class="login-brand">Agência Ângelo</div>
     <div class="login-sub">Portal do Cliente</div>
-
-    <div class="field">
-      <label>Usuário</label>
-      <input id="lu" type="text" placeholder="usuario ou admin"/>
-    </div>
-
-    <div class="field">
-      <label>Senha</label>
-      <input id="lp" type="password" placeholder="••••••••"
-        onkeydown="if(event.key==='Enter')doLogin()"/>
-    </div>
-
+    <div class="field"><label>Usuário</label><input id="lu" type="text" placeholder="usuario ou admin"/></div>
+    <div class="field"><label>Senha</label><input id="lp" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/></div>
     <button class="btn-primary" onclick="doLogin()">Entrar</button>
-
-    <div class="err" id="lerr" style="display:none;">
-      Usuário ou senha incorretos.
-    </div>
+    <div class="err" id="lerr">Usuário ou senha incorretos.</div>
   </div>
 </div>
 
 <!-- CLIENT APP -->
-<script>
-// armazenar arquivos temporariamente
-let uploadedFiles = [];
-
-function handleFileSelect(files){
-  const list = document.getElementById('upList');
-
-  for(let i = 0; i < files.length; i++){
-    const file = files[i];
-    uploadedFiles.push(file);
-
-    const li = document.createElement('li');
-    li.style.cssText = 'padding:8px 10px;background:var(--card2);border:1px solid var(--border);border-radius:6px;margin-bottom:6px;font-size:12px';
-
-    li.innerHTML = `
-      📎 ${file.name} 
-      <span style="float:right;color:var(--muted)">
-        ${(file.size / 1024 / 1024).toFixed(2)} MB
-      </span>
-    `;
-
-    list.appendChild(li);
-  }
-
-  showToast?.('📁 Arquivo(s) selecionado(s)');
-}
-</script>
+<div id="clientApp">
+  <aside class="sidebar">
+    <div class="sb-top">
+      <div class="sb-toprow"><div class="sb-icon">A</div><div class="sb-brand">Agência Ângelo</div></div>
+      <div class="cpill"><div class="av" id="cAv">A</div><div class="cn" id="cName">Cliente</div></div>
+    </div>
+    <nav class="sb-nav">
+      <div class="ni active" onclick="cNav('overview',this)"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><span class="nl">Visão Geral</span></div>
+      <div class="ni" onclick="cNav('demands',this)"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg><span class="nl">Demandas</span></div>
+      <div class="ni" onclick="cNav('indicadores',this)"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span class="nl">Indicadores</span></div>
+      <div class="ni" onclick="cNav('relatorios',this)"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span class="nl">Relatórios</span></div>
+      <div class="ni" onclick="cNav('mercado',this)"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10A15.3 15.3 0 0112 2z"/></svg><span class="nl">Mercado</span></div>
+      <div class="ni" onclick="cNav('estrategias',this)"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg><span class="nl">Estratégias</span></div>
+      <div class="ni" onclick="cNav('calendario',this)"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="nl">Calendário</span></div>
+      <div class="ni" onclick="cNav('campanhas',this)"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span class="nl">Campanhas</span></div>
+      <div class="ni" onclick="cNav('drive',this)"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg><span class="nl">Arquivos</span></div>
+      <div class="ni" onclick="cNav('preferencias',this)"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg><span class="nl">Preferências</span></div>
+      <div class="ni" onclick="cNav('support',this)"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><span class="nl">Suporte</span></div>
+    </nav>
+    <div class="sb-foot" onclick="doLogout()"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span class="fl">Sair</span></div>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <div class="page-title" id="cTitle">Visão Geral</div>
+      <div class="tbr">
+        <div class="notif"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><div class="ndot"></div></div>
+        <div class="uchip"><div class="uav" id="cTAv">A</div><span id="cTName" style="font-size:13px;font-weight:600">Cliente</span></div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="section active" id="c-overview"><div class="kpi-grid" id="c-kpi-overview"></div><div class="g2"><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Atividades Recentes</div></div><div id="c-ov-act-list"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Score do Cliente</div></div><div class="sw" id="c-score-ring"><div style="width:68px;height:68px;background:var(--card);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900">78</div></div><div style="text-align:center;font-size:11px;color:var(--muted);margin-bottom:12px">Colaboração excelente</div><div id="c-score-rows"></div></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>🎯 Metas do Mês</div></div><div id="c-metas-list"></div></div></div>
+      <div class="section" id="c-activities"><div class="dem-form"><h3 style="font-size:15px;font-weight:800;margin-bottom:4px">📝 Adicionar Observação</h3><div class="fr"><div class="fg2"><label>Atividade</label><select id="actSel" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none"></select></div><div class="fg2"><label>Tipo</label><select id="actType" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;outline:none"><option>Aprovação</option><option>Ajuste</option><option>Comentário</option><option>Urgente</option></select></div></div><div class="fg2"><label>Mensagem</label><textarea id="actMsg" placeholder="Descreva seu feedback..."></textarea></div><button onclick="enviarObsAtividade()" class="btn-save">Enviar Feedback</button></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Todas as Atividades</div></div><div id="c-act-list"></div></div></div>
+      <div class="section" id="c-demands"><div class="dem-form" id="demFormWrap"><h3 style="font-size:15px;font-weight:800;margin-bottom:4px" id="demFormTitle">➕ Nova Demanda</h3><input type="hidden" id="demEditId" value=""><div class="fr"><div class="fg2"><label>Título</label><input id="dTit"/></div><div class="fg2"><label>Tipo</label><select id="dTip"><option value="">Selecione...</option><option>Arte / Design</option><option>Vídeo / Reels</option><option>Gravação</option><option>Estratégia</option><option>Relatório</option><option>Outro</option></select></div></div><div class="fr"><div class="fg2"><label>Prazo</label><input id="dPra" type="date"/></div><div class="fg2"><label>Prioridade</label><select id="dPri"><option>Normal</option><option>Alta</option><option>Urgente</option></select></div></div>          <div class="fg2"><label>Descrição</label><textarea id="dDes" placeholder="Detalhe cores, referências, medidas..."></textarea></div>
+          <!-- Upload de arquivo na demanda -->
+          <div class="fg2"><label>Anexar Arquivo (opcional)</label>
+            <div class="upload-zone" style="padding:16px" id="demUpZone" onclick="document.getElementById('demFileIn').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="demFileDrop(event)">
+              <p>📎 Arraste ou <strong>clique para selecionar</strong></p>
+            </div>
+            <input type="file" id="demFileIn" onchange="demFileSelect(this.files)">
+            <ul class="up-file-list" id="demUpList"></ul>
+          </div><div style="display:flex;gap:10px;margin-top:8px"><button onclick="salvarDemanda()" class="btn-save" id="demBtnSave">Enviar Demanda</button><button onclick="cancelarEditDemanda()" class="btn-cancel" id="demBtnCancel" style="display:none">Cancelar</button></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Minhas Demandas</div></div><div id="c-dem-list"></div></div></div>
+      <div class="section" id="c-indicadores">
+        <!-- Filtro de período -->
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px">
+          <div class="tabs" id="indPeriodTabs">
+            <div class="tab active" onclick="setIndPeriod(7,this)">7 dias</div>
+            <div class="tab" onclick="setIndPeriod(30,this)">30 dias</div>
+            <div class="tab" onclick="setIndPeriod(90,this)">90 dias</div>
+            <div class="tab" onclick="setIndPeriod(180,this)">6 meses</div>
+            <div class="tab" onclick="setIndPeriod(365,this)">1 ano</div>
+          </div>
+          <button onclick="openClientIndModal()" class="btn-add" style="font-size:12px">+ Adicionar Indicador</button>
+        </div>
+        <div class="kpi-grid" id="c-ind-kpis"></div>
+        <div class="g2">
+          <div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Por Plataforma</div></div><div id="c-ind-chart"></div></div>
+          <div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Top Conteúdos</div></div><div id="c-ind-top"></div></div>
+        </div>
+        <div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>🎯 Metas de Indicadores</div></div><div id="c-ind-metas"></div></div>
+      </div>
+      <div class="section" id="c-relatorios"><div class="readonly-notice">🔒 Relatórios publicados pela Agência Ângelo.</div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Relatórios</div></div><div id="c-rel-list"></div></div></div>
+      <div class="section" id="c-mercado"><div class="readonly-notice">🔒 Análise de mercado.</div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Tendências</div></div><div id="c-merc-list"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Concorrentes</div></div><div id="c-conc-list"></div></div></div>
+      <div class="section" id="c-estrategias"><div class="readonly-notice">🔒 Estratégias definidas pela Agência Ângelo.</div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Estratégias Ativas</div></div><div id="c-est-list"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>🎯 Metas de Estratégia</div></div><div id="c-est-metas"></div></div></div>
+      <div class="section" id="c-calendario"><div class="readonly-notice">🔒 Calendário editorial gerenciado pela Agência Ângelo.</div><div class="card"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><div class="ct-left" style="font-size:14px;font-weight:700;display:flex;gap:8px"><div class="ctd" style="margin-top:5px"></div><span id="calMonthLabel"></span></div><div style="display:flex;gap:6px"><button onclick="changeCalMonth(-1)" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:5px 12px;border-radius:7px;cursor:pointer">‹</button><button onclick="changeCalMonth(1)" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:5px 12px;border-radius:7px;cursor:pointer">›</button></div></div><div class="cal-header"><div class="cal-hd">Dom</div><div class="cal-hd">Seg</div><div class="cal-hd">Ter</div><div class="cal-hd">Qua</div><div class="cal-hd">Qui</div><div class="cal-hd">Sex</div><div class="cal-hd">Sáb</div></div><div class="cal-grid" id="calGrid"></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Eventos do Mês</div></div><div id="calEventList"></div></div></div>
+      <div class="section" id="c-campanhas"><div class="readonly-notice">🔒 Campanhas gerenciadas pela Agência Ângelo.</div><div id="c-camp-list"></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>🎯 Metas de Campanhas</div></div><div id="c-camp-metas"></div></div></div>
+      <div class="section" id="c-drive"><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Enviar Arquivo</div></div><div class="upload-zone" id="dropZone" onclick="document.getElementById('fileInput').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event)"><p>Arraste ou <strong>clique para selecionar</strong></p><p style="font-size:11px;margin-top:4px;color:var(--muted)">PDF, JPG, PNG, MP4, ZIP até 50MB</p></div><input type="file" id="fileInput" multiple onchange="handleFileSelect(this.files)"/><ul class="up-file-list" id="upList"></ul></div><div class="card"><div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:11px;background:var(--card2);border-radius:9px;border:1px solid var(--border);font-size:12px"><span style="color:var(--muted)">Pasta Drive:</span><span style="color:var(--blue);cursor:pointer;font-weight:600" id="driveFolderLabel" onclick="openClientDriveFolder()">Abrir minha pasta →</span></div><div class="tabs"><div class="tab active" onclick="filterFiles('all',this)">Todos</div><div class="tab" onclick="filterFiles('arte',this)">Artes</div><div class="tab" onclick="filterFiles('video',this)">Vídeos</div><div class="tab" onclick="filterFiles('doc',this)">Docs</div></div><div class="fg-grid" id="filesGrid"></div></div></div>
+      <div class="section" id="c-preferencias"><div class="pref-section"><div class="pref-title">🔔 Notificações</div><div class="toggle-row"><span>E-mail ao receber novo arquivo</span><div class="toggle on" onclick="this.classList.toggle('on')"></div></div><div class="toggle-row"><span>Alertas de prazo próximo</span><div class="toggle on" onclick="this.classList.toggle('on')"></div></div><div class="toggle-row"><span>Resumo semanal</span><div class="toggle" onclick="this.classList.toggle('on')"></div></div></div><div class="pref-section"><div class="pref-title">👤 Dados de Contato</div><div class="fr"><div class="fg2"><label>Nome</label><input id="prefNome"/></div><div class="fg2"><label>E-mail</label><input id="prefEmail"/></div></div><div class="fr"><div class="fg2"><label>WhatsApp</label><input id="prefWpp"/></div><div class="fg2"><label>Instagram</label><input id="prefInsta"/></div></div><button onclick="showToast('✅ Preferências salvas!')" class="btn-save">Salvar</button></div><div class="card" id="c-contrato-info"></div></div>
+      <div class="section" id="c-support"><div class="g2"><div><div style="background:linear-gradient(135deg,var(--card2),var(--card));border-radius:13px;padding:22px;border:1px solid var(--border);text-align:center;margin-bottom:18px"><div style="width:60px;height:60px;background:linear-gradient(135deg,var(--orange),#9b1e6b);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;margin:0 auto 10px">A</div><div style="font-size:15px;font-weight:800;margin-bottom:3px">Adson Ângelo</div><div style="font-size:12px;color:var(--muted);margin-bottom:14px">Consultor de Marketing</div><div style="display:flex;gap:8px;justify-content:center">              <button onclick="window.open('https://wa.me/5584991236489','_blank')" class="btn-save" style="width:auto;padding:9px 18px">WhatsApp</button><button onclick="showToast('contato@agenciaangelo.com')" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:9px 18px;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer">Email</button></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>Mensagem</div></div><textarea placeholder="Sua dúvida..." style="width:100%;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:10px;color:var(--text);font-size:12px;resize:vertical;min-height:80px;margin-bottom:10px;font-family:inherit;outline:none"></textarea><button onclick="showToast('Mensagem enviada!')" class="btn-save" style="width:auto;padding:9px 20px;font-size:12px">Enviar</button></div></div><div class="card"><div class="ct"><div class="ct-left"><div class="ctd"></div>FAQ</div></div><div id="c-faq-list"></div></div></div></div>
+    </div>
+  </main>
+</div>
 
 <!-- ADMIN APP -->
 <div id="adminApp">
@@ -473,7 +504,7 @@ function handleFileSelect(files){
 // ═══════════════════════════════════════
 // CONFIG
 // ═══════════════════════════════════════
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyZROXHxOKi5wDYVFjny1QI4qwRllqaKhoOaMZ-Qq7oLQ7vosPbtyo9u-KWlWwSKNri/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzferaNSNKiUXyjIxaCjKsJDerz3DLpVx7iNYCThrBFP3cUQnz5lp791CUJg_2HsMOQ/exec';
 let currentUser = null;
 
 // ═══════════════════════════════════════
@@ -1535,44 +1566,75 @@ function demFileDrop(e){e.preventDefault();document.getElementById('demUpZone').
 function demFileSelect(files){if(!files||!files[0])return;uploadFiles(files,currentUser?.nome,'demUpList','demandas');}
 
 // ── Campanha com meta integrada ──
-// ── Campanha com meta integrada ──
 function goToNewDemand(){
   cNav('demands', document.querySelectorAll('.ni')[2]);
-
+  // Reseta o formulário e faz scroll até ele
   setTimeout(()=>{
     resetDemForm();
-    document.getElementById('demFormWrap')?.scrollIntoView({
-      behavior:'smooth',
-      block:'start'
-    });
+    document.getElementById('demFormWrap')?.scrollIntoView({behavior:'smooth',block:'start'});
     document.getElementById('dTit')?.focus();
   }, 100);
+}const ativ=document.getElementById('actSel').value;const tipo=document.getElementById('actType').value;const msg=document.getElementById('actMsg').value.trim();if(!msg){showToast('⚠️ Escreva uma mensagem.','var(--red)');return;}const item=document.createElement('div');item.style.cssText='padding:12px;background:var(--card2);border-radius:9px;margin-bottom:8px;border:1px solid var(--orange);border-left:3px solid var(--orange)';item.innerHTML=`<div style="font-size:13px;font-weight:700">${tipo}: ${ativ}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${currentUser?.nome} • Agora</div><div style="font-size:12px;margin-top:4px">${msg}</div>`;document.getElementById('c-act-list').prepend(item);document.getElementById('actMsg').value='';showToast('✅ Observação enviada!');}
+function toggleResp(btn){btn.closest('.di').querySelector('.resp-box').classList.toggle('open');}
+function sendResp(btn){const box=btn.closest('.resp-box');const txt=box.querySelector('textarea').value.trim();if(!txt)return;box.innerHTML=`<div style="font-size:12px;color:var(--green)">✅ Resposta enviada: "${txt.substring(0,60)}"</div>`;showToast('Resposta enviada!');}
+function updateClientDriveLabel(){const c=DB.clients.find(x=>x.user===currentUser?.user);document.getElementById('driveFolderLabel').textContent=c?.drive?'Abrir minha pasta →':'Pasta não configurada';}
+function openClientDriveFolder(){const c=DB.clients.find(x=>x.user===currentUser?.user);if(c?.drive)window.open(`https://drive.google.com/drive/folders/${c.drive}`,'_blank');else showToast('⚠️ Pasta não configurada.','var(--red)');}
+function openSelectedClientFolder(){const nm=document.getElementById('upClientSel').value;const c=DB.clients.find(x=>x.nome===nm);if(c?.drive)window.open(`https://drive.google.com/drive/folders/${c.drive}`,'_blank');else showToast('⚠️ Pasta não configurada.','var(--red)');}
+function onUpClientChange(){document.getElementById('openFolderBtn').style.display=document.getElementById('upClientSel').value?'block':'none';}
+function filterFiles(t,el){document.querySelectorAll('.tabs .tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');document.querySelectorAll('#filesGrid .fc').forEach(c=>{c.style.display=(t==='all'||c.dataset.type===t)?'':'none';});}
+function renderClientFiles(){
+  const grid=document.getElementById('filesGrid');if(!grid)return;
+  const cf=currentUser?.emp||currentUser?.nome||'';
+  const all=DB.arquivos.filter(a=>a.cliente===cf||a.cliente===currentUser?.nome);
+  if(!all.length){grid.innerHTML='<div style="grid-column:1/-1;font-size:12px;color:var(--muted);padding:8px 0">Nenhum arquivo enviado ainda.</div>';return;}
+  grid.innerHTML=all.map(a=>`
+    <div class="fc" data-type="${a.tipo||'doc'}" onclick="window.open('${a.link}','_blank')" title="${a.nome}">
+      <div class="fn">${a.nome}</div>
+      <div class="fm">${a.size||''} • ${a.data||''}</div>
+      <div style="font-size:10px;color:var(--blue);margin-top:2px">🔗 Ver no Drive</div>
+    </div>`).join('');
 }
 
-// ✅ NOVA FUNÇÃO (corrigida)
-function sendClientAction(){
-  const ativ = document.getElementById('actSel').value;
-  const tipo = document.getElementById('actType').value;
-  const msg = document.getElementById('actMsg').value.trim();
+function fileToBase64(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(f);});}
 
-  if(!msg){
-    showToast('⚠️ Escreva uma mensagem.','var(--red)');
-    return;
+async function uploadFiles(files,clienteNome,listId,pagina='drive'){
+  if(!files||!files.length)return;
+  const list=document.getElementById(listId);if(!list)return;
+  const co=DB.clients.find(c=>c.nome===clienteNome||c.user===currentUser?.user);
+  const fId=co?.drive||null,fLink=fId?`https://drive.google.com/drive/folders/${fId}`:null;
+  for(const f of Array.from(files)){
+    const uid='f'+Date.now()+Math.random().toString(36).substr(2,4);
+    const li=document.createElement('li');
+    li.innerHTML=`<span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px">${f.name}</span><span style="color:var(--muted);font-size:11px">${(f.size/1024/1024).toFixed(1)}MB</span><span class="b bye" id="st_${uid}" style="font-size:10px">Aguardando</span><div class="up-progress"><div class="up-progress-bar" id="prb_${uid}" style="width:0%"></div></div>`;
+    list.appendChild(li);
+    const setSt=(cls,txt,click)=>{const el=document.getElementById('st_'+uid);if(!el)return;el.className='b '+cls;el.textContent=txt;if(click){el.style.cursor='pointer';el.onclick=click;}};
+    const setPr=p=>{const b=document.getElementById('prb_'+uid);if(b)b.style.width=p+'%';};
+    if(!SCRIPT_URL){if(fLink)setSt('bor','Abrir pasta →',()=>window.open(fLink,'_blank'));else setSt('bred','Sem pasta');continue;}
+    if(!fId){setSt('bred','Sem pasta');continue;}
+    setSt('bbl','Enviando…');setPr(30);
+    try{
+      const b64=await fileToBase64(f);setPr(60);
+      const res=await fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'uploadArquivo',folderId:fId,fileName:f.name,mimeType:f.type||'application/octet-stream',data:b64,cliente:clienteNome})});
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      const json=await res.json();setPr(100);
+      if(json.ok){
+        const ext=f.name.split('.').pop().toLowerCase();
+        const tipo=['jpg','jpeg','png','gif','webp'].includes(ext)?'arte':['mp4','mov','avi','webm'].includes(ext)?'video':['wav','mp3','aac'].includes(ext)?'grav':'doc';
+        const now=new Date();
+        const arq={id:nid(),fileId:json.fileId,nome:f.name,size:(f.size/1024/1024).toFixed(1)+'MB',tipo,cliente:clienteNome||currentUser?.emp||currentUser?.nome||'',pagina,data:`${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()}`,link:`https://drive.google.com/file/d/${json.fileId}/view`};
+        DB.arquivos.unshift(arq);
+        await sheetsSave('Arquivos',arq);
+        setSt('bgr','Ver arquivo →',()=>window.open(arq.link,'_blank'));
+        renderClientFiles();
+      } else setSt('bred',json.msg||'Erro');
+    }catch(e){setPr(0);if(fLink)setSt('bor','Abrir pasta →',()=>window.open(fLink,'_blank'));else setSt('bred','Erro: '+e.message);}
   }
-
-  const item = document.createElement('div');
-  item.style.cssText = 'padding:12px;background:var(--card2);border-radius:9px;margin-bottom:8px;border:1px solid var(--orange);border-left:3px solid var(--orange)';
-  
-  item.innerHTML = `
-    <div style="font-size:13px;font-weight:700">${tipo}: ${ativ}</div>
-    <div style="font-size:11px;color:var(--muted);margin-top:2px">${currentUser?.nome} • Agora</div>
-    <div style="font-size:12px;margin-top:4px">${msg}</div>
-  `;
-
-  document.getElementById('c-act-list').prepend(item);
-  document.getElementById('actMsg').value = '';
-  showToast('✅ Observação enviada!');
 }
+function handleFileSelect(files){uploadFiles(files,currentUser?.nome,'upList','drive');}
+function handleDrop(e){e.preventDefault();document.getElementById('dropZone').classList.remove('drag');uploadFiles(e.dataTransfer.files,currentUser?.nome,'upList','drive');}
+function handleAdminFiles(files){const cl=document.getElementById('upClientSel').value;if(!cl){showToast('⚠️ Selecione um cliente.','var(--red)');return;}uploadFiles(files,cl,'adminUpList','drive');}
+function handleAdminDrop(e){e.preventDefault();document.getElementById('adminDropZone').classList.remove('drag');const cl=document.getElementById('upClientSel').value;if(!cl){showToast('⚠️ Selecione um cliente.','var(--red)');return;}uploadFiles(e.dataTransfer.files,cl,'adminUpList','drive');}
+
 // ═══════════════════════════════════════
 // APPS SCRIPT CONFIG
 // ═══════════════════════════════════════
@@ -1583,31 +1645,6 @@ function removerUrl(){showToast('URL fixa — não pode ser removida via portal.
 function copyScript(){navigator.clipboard.writeText(document.getElementById('scriptCode').textContent).then(()=>showToast('✅ Código copiado!')).catch(()=>showToast('⚠️ Copie manualmente.','var(--yellow)'));}
 function closeModal(id){document.getElementById(id).classList.remove('show');}
 document.addEventListener('click',e=>{if(e.target.classList.contains('modal-bg'))e.target.classList.remove('show');});
-</script>
-<script>
-function doLogin(){
-  const user = document.getElementById('lu').value.trim();
-  const pass = document.getElementById('lp').value.trim();
-  const error = document.getElementById('lerr');
-
-  // usuário de teste
-  if(user === 'admin' && pass === '1234'){
-    
-    // esconde login
-    document.getElementById('loginScreen').style.display = 'none';
-
-    // exemplo: mostrar sistema (crie essa div no seu projeto)
-    const app = document.getElementById('app');
-    if(app){
-      app.style.display = 'block';
-    }
-
-    console.log('Login realizado com sucesso');
-
-  } else {
-    error.style.display = 'block';
-  }
-}
 </script>
 </body>
 </html>
