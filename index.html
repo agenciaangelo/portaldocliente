@@ -340,10 +340,23 @@ tr:hover td{background:rgba(255,255,255,.015)}
   <div class="login-box">
     <div class="login-brand">Agência Ângelo</div>
     <div class="login-sub">Portal do Cliente</div>
-    <div class="field"><label>Usuário</label><input id="lu" type="text" placeholder="usuario ou admin"/></div>
-    <div class="field"><label>Senha</label><input id="lp" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+
+    <div class="field">
+      <label>Usuário</label>
+      <input id="lu" type="text" placeholder="usuario ou admin"/>
+    </div>
+
+    <div class="field">
+      <label>Senha</label>
+      <input id="lp" type="password" placeholder="••••••••"
+        onkeydown="if(event.key==='Enter')doLogin()"/>
+    </div>
+
     <button class="btn-primary" onclick="doLogin()">Entrar</button>
-    <div class="err" id="lerr">Usuário ou senha incorretos.</div>
+
+    <div class="err" id="lerr" style="display:none;">
+      Usuário ou senha incorretos.
+    </div>
   </div>
 </div>
 
@@ -1614,6 +1627,31 @@ function removerUrl(){showToast('URL fixa — não pode ser removida via portal.
 function copyScript(){navigator.clipboard.writeText(document.getElementById('scriptCode').textContent).then(()=>showToast('✅ Código copiado!')).catch(()=>showToast('⚠️ Copie manualmente.','var(--yellow)'));}
 function closeModal(id){document.getElementById(id).classList.remove('show');}
 document.addEventListener('click',e=>{if(e.target.classList.contains('modal-bg'))e.target.classList.remove('show');});
+</script>
+<script>
+function doLogin(){
+  const user = document.getElementById('lu').value.trim();
+  const pass = document.getElementById('lp').value.trim();
+  const error = document.getElementById('lerr');
+
+  // usuário de teste
+  if(user === 'admin' && pass === '1234'){
+    
+    // esconde login
+    document.getElementById('loginScreen').style.display = 'none';
+
+    // exemplo: mostrar sistema (crie essa div no seu projeto)
+    const app = document.getElementById('app');
+    if(app){
+      app.style.display = 'block';
+    }
+
+    console.log('Login realizado com sucesso');
+
+  } else {
+    error.style.display = 'block';
+  }
+}
 </script>
 </body>
 </html>
