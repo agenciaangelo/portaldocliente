@@ -1560,7 +1560,6 @@ async function deleteClientInd(){
   await sheetsDelete('Indicadores',id);
   renderCIndicadores(); closeModal('clientIndModal'); showToast('🗑️ Removido.');
 }
-
 function sendAction(){
   const ativ = document.getElementById('actSel').value;
   const tipo = document.getElementById('actType').value;
