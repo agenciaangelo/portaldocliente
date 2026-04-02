@@ -1118,7 +1118,7 @@ function renderCCampanhas(){
   document.getElementById('c-camp-metas').innerHTML=DB.metas.filter(m=>m.cat==='Campanhas').map(metaBarHTML).join('')||'<div style="font-size:12px;color:var(--muted)">Nenhuma meta.</div>';
 }
 function renderCPreferencias(){
-  const c=DB.clients.find(x=>x.user===currentUser?.user);
+  const c=DB.clients.find(x=>x.user===currentUser?.user||x.nome===currentUser?.nome);
   const el=document.getElementById('c-contrato-info');if(!c||!el)return;
   el.innerHTML=`<div class="ct"><div class="ct-left"><div class="ctd"></div>📄 Dados do Contrato</div></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
@@ -1422,7 +1422,7 @@ async function saveIndicador(){const m=document.getElementById('indMetrica').val
 async function deleteIndicador(){const id=document.getElementById('indEditId').value;if(!confirm('Remover?'))return;DB.indicadores=DB.indicadores.filter(x=>String(x.id)!==String(id));await sheetsDelete('Indicadores',id);renderAIndicadores();renderCIndicadores();closeModal('indModal');showToast('🗑️ Removido.');}
 
 // Plataformas
-function openPlatModal(id){document.getElementById('platEditId').value=id||'';document.getElementById('platModalTitle').textContent=id?'Editar Plataforma':'Nova Plataforma';document.getElementById('btnDeletePlat').style.display=id?'block':'none';if(id){const p=DB.platData.find(x=>x.id===id);if(p){document.getElementById('platNome').value=p.nome;document.getElementById('platPct').value=p.pct;document.getElementById('platCor').value=p.cor;}}else{['platNome','platPct'].forEach(x=>document.getElementById(x).value='');document.getElementById('platCor').value='#ff0000';}document.getElementById('platModal').classList.add('show');}
+function openPlatModal(id){document.getElementById('platEditId').value=id||'';document.getElementById('platModalTitle').textContent=id?'Editar Plataforma':'Nova Plataforma';document.getElementById('btnDeletePlat').style.display=id?'block':'none';if(id){const p=DB.platData.find(x=>String(x.id)===String(id));if(p){document.getElementById('platNome').value=p.nome;document.getElementById('platPct').value=p.pct;document.getElementById('platCor').value=p.cor;}}else{['platNome','platPct'].forEach(x=>document.getElementById(x).value='');document.getElementById('platCor').value='#ff0000';}document.getElementById('platModal').classList.add('show');}
 async function savePlat(){const n=document.getElementById('platNome').value.trim();if(!n)return;const id=document.getElementById('platEditId').value;const p={id:id||nid(),nome:n,pct:parseInt(document.getElementById('platPct').value)||0,cor:document.getElementById('platCor').value};if(id){const idx=DB.platData.findIndex(x=>String(x.id)===String(id));if(idx>=0)DB.platData[idx]=p;}else DB.platData.push(p);await sheetsSave('PlatData',p);renderAIndicadores();renderCIndicadores();closeModal('platModal');showToast('✅ Plataforma salva!');}
 async function deletePlat(){const id=document.getElementById('platEditId').value;if(!confirm('Remover?'))return;DB.platData=DB.platData.filter(x=>String(x.id)!==String(id));await sheetsDelete('PlatData',id);renderAIndicadores();renderCIndicadores();closeModal('platModal');showToast('🗑️ Removida.');}
 
